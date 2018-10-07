@@ -1,5 +1,7 @@
 package com.mikastamm.chesstime.GUI.UserInterface;
 
-public interface MenuView {
+import android.content.Context;
 
+public interface MenuView {
+    Context getContext();
 }
