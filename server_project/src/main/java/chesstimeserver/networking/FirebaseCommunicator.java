@@ -1,5 +1,33 @@
 package chesstimeserver.networking;
 
-public class FirebaseCommunicator {
+import java.time.Duration;
 
+import chesstimeserver.networking.servlets.UpdateFirebaseTokenServlet;
+import de.bytefish.fcmjava.client.FcmClient;
+import de.bytefish.fcmjava.constants.Constants;
+import de.bytefish.fcmjava.http.options.IFcmClientSettings;
+import de.bytefish.fcmjava.model.options.FcmMessageOptions;
+import de.bytefish.fcmjava.model.topics.Topic;
+import de.bytefish.fcmjava.requests.data.DataUnicastMessage;
+import de.bytefish.fcmjava.requests.notification.NotificationPayload;
+import de.bytefish.fcmjava.requests.notification.NotificationUnicastMessage;
+import de.bytefish.fcmjava.requests.topic.TopicUnicastMessage;
+import de.bytefish.fcmjava.responses.FcmMessageResponse;
+
+public class FirebaseCommunicator {
+	public static void sendTestFCM() {
+		IFcmClientSettings settings = new FcmClientSettings();
+		FcmClient client = new FcmClient(settings);
+		 FcmMessageOptions options = FcmMessageOptions.builder()
+				 .setTimeToLive(Duration.ofHours(1))
+				 .build();
+		 
+	     NotificationPayload payload = NotificationPayload.builder()
+	             .setBody("body")
+	             .setTitle("Game found")
+	             .build();
+	    // FcmMessageResponse response = client.send(new DataUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, null));
+		 FcmMessageResponse response = client.send(new NotificationUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, payload));
+		 System.out.println("Sent FCM Succ:"+		 response.getNumberOfSuccess() + " Fail:"+response.getNumberOfFailure());
+	}
 }

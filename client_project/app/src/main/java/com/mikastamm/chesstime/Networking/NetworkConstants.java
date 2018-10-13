@@ -1,7 +1,7 @@
 package com.mikastamm.chesstime.Networking;
 
 public class NetworkConstants {
-    public static final String ServerBaseUrl = "http://192.168.0.122:8080/chesstime-server/";
+    public static final String ServerBaseUrl = "http://192.168.137.1:8080/chesstime-server/";
     public static final String FindGameRestPath = "/findGame";
     public static final String SetFirebaseTokenRestPath = "/updateFirebaseToken";
 
