@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 class RestServerCommunicator implements IServerCommunicator{
     @Override
@@ -22,7 +24,18 @@ class RestServerCommunicator implements IServerCommunicator{
     }
 
     @Override
-    public void updateFirebaseToken(String passwordToken, String firebaseToken) {
+    public void updateFirebaseToken(final String passwordToken, final String firebaseToken) {
+        //Networking cannot be done on UI Thread, so start a new Thread for the Request
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                sendUpdateFireBaseToken(passwordToken, firebaseToken);
+            }
+        });
+
+    }
+
+    private void sendUpdateFireBaseToken(final String passwordToken, final String firebaseToken) {
         URL requestUrl;
         try{
             requestUrl = new URL(NetworkConstants.ServerBaseUrl + NetworkConstants.SetFirebaseTokenRestPath);
@@ -32,7 +45,7 @@ class RestServerCommunicator implements IServerCommunicator{
             connection.setRequestMethod("POST");
             connection.setRequestProperty("password_token", passwordToken);
             connection.setRequestProperty("firebase_token", firebaseToken);
-
+            Map<String, List<String>> x = connection.getRequestProperties();
             int responseCode = connection.getResponseCode();
             connection.disconnect();
             if(responseCode == 200)

@@ -1,8 +1,14 @@
 package com.mikastamm.chesstime.GUI.PresentationLogic;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.mikastamm.chesstime.GUI.UserInterface.MenuView;
+import com.mikastamm.chesstime.Game.PersistenceManager;
+import com.mikastamm.chesstime.Networking.ServerCommunication.ServerCommunicator;
 
 public class DefaultMenuPresenter implements IMenuPresenter {
 
@@ -62,5 +68,18 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
     @Override
     public void findGame() {
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.e("newToken", newToken);
+                    PersistenceManager.storeFirebaseId(newToken, viewContext);
+            }
+        });
+
+        String firebaseToken = PersistenceManager.getFirebaseId(viewContext);
+        ServerCommunicator.getInstance().updateFirebaseToken("", FirebaseInstanceId.getInstance().getToken());
+        Log.i("ChessTime", "FirebaseToken:"+firebaseToken);
     }
 }

@@ -12,6 +12,7 @@ public class PersistenceManager {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(firebaseIdKey, id);
+        editor.apply();
     }
 
     public static String getFirebaseId(Context context)

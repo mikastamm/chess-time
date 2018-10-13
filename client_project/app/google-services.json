@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "799781274603",
+    "firebase_url": "https://chesstime-android.firebaseio.com",
+    "project_id": "chesstime-android",
+    "storage_bucket": "chesstime-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799781274603:android:fc64e6c6832824bf",
+        "android_client_info": {
+          "package_name": "com.mikastamm.chesstime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799781274603-1pp0dghmtrhl753ll67ah537jorlrj94.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mikastamm.chesstime",
+            "certificate_hash": "4cead4ac81a0148654a4842ce1e726e311089a98"
+          }
+        },
+        {
+          "client_id": "799781274603-luc405b0k6fqr7efsa4aof85si0sp03k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC53nBJRkdfEtGJbTvtiyTtVJxcMRTaMfo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799781274603-luc405b0k6fqr7efsa4aof85si0sp03k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,8 +19,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        presenter.onCreate();
+        presenter.setView(this);
 
+        presenter.onCreate();
         //Bind Search button to presenter
         Button searchButton = findViewById(R.id.btnMenuActivitySearchGame);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -30,7 +31,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             }
         });
 
-        initializeApp();
     }
 
     @Override
@@ -57,9 +57,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         presenter.onStart();
     }
 
-    //TODO: Move to own class
-    private void initializeApp(){
-    }
+
 
     @Override
     public Context getContext() {
