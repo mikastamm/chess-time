@@ -28,11 +28,11 @@ public class UpdateFirebaseTokenServlet extends HttpServlet {
 		try
 		{		
 			newFirebaseToken = request.getHeader("firebase_token");
-			System.out.println("[MIKA]Received Firebase Token:"+newFirebaseToken);
+			System.out.println("Received Firebase Token:"+newFirebaseToken);
 			passwordToken = request.getHeader("password_token");
 		}
 		catch(RuntimeException ex) {
-			System.out.println("[MIKA]Bad Request");
+			System.out.println("Bad Request");
 			response.setStatus(400); //400: Bad Request
 		}
 		

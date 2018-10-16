@@ -8,7 +8,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>searchPlayerServlet</servlet-name>
-    <url-pattern>/findGame/*</url-pattern>
+    <url-pattern>/findGame</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
