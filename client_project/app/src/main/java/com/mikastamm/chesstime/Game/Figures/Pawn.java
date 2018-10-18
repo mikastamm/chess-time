@@ -1,4 +1,4 @@
-package com.mikastamm.chesstime.Game.Entities;
+package com.mikastamm.chesstime.Game.Figures;
 
 import android.graphics.Point;
 
@@ -27,9 +27,9 @@ public class Pawn extends Figure {
         final int movePatternCount = 3;
         FigureMovePattern[] moves = new FigureMovePattern[movePatternCount];
 
-        moves[0] = new FigureMovePattern(new Point(0,1), false, false);
-        moves[1] = new FigureMovePattern(new Point(1,1), false, true);
-        moves[2] = new FigureMovePattern(new Point(-1,1), false, true);
+        moves[0] = new FigureMovePattern(new Point(0,1), false, false, false);
+        moves[1] = new FigureMovePattern(new Point(1,1), false, true, false);
+        moves[2] = new FigureMovePattern(new Point(-1,1), false, true, false);
 
 
         return moves;

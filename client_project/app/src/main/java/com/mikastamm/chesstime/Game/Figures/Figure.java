@@ -1,4 +1,4 @@
-package com.mikastamm.chesstime.Game.Entities;
+package com.mikastamm.chesstime.Game.Figures;
 
 public abstract class Figure {
 

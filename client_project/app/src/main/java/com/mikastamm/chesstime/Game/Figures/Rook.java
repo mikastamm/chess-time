@@ -1,4 +1,4 @@
-package com.mikastamm.chesstime.Game.Entities;
+package com.mikastamm.chesstime.Game.Figures;
 
 import android.graphics.Point;
 
@@ -26,10 +26,10 @@ public class Rook extends Figure {
         final int movePatternCount = 4;
         FigureMovePattern[] moves = new FigureMovePattern[movePatternCount];
 
-        moves[0] = new FigureMovePattern(new Point(0,1), true, false);
-        moves[1] = new FigureMovePattern(new Point(1,0), true, false);
-        moves[2] = new FigureMovePattern(new Point(0,-1), true, false);
-        moves[3] = new FigureMovePattern(new Point(-1,0), true, false);
+        moves[0] = new FigureMovePattern(new Point(0,1), true, false , false);
+        moves[1] = new FigureMovePattern(new Point(1,0), true, false , false);
+        moves[2] = new FigureMovePattern(new Point(0,-1), true, false, false);
+        moves[3] = new FigureMovePattern(new Point(-1,0), true, false, false);
 
 
         return moves;

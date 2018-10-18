@@ -1,4 +1,4 @@
-package com.mikastamm.chesstime.Game.Entities;
+package com.mikastamm.chesstime.Game.Figures;
 
 import android.graphics.Point;
 
@@ -30,7 +30,8 @@ public class Queen extends Figure {
             moves[i] = new FigureMovePattern(
                     new Point((int)Math.ceil(Math.cos(i*Math.toRadians(45))), (int)Math.ceil(Math.sin(i*Math.toRadians(45)))),
                     true,
-                    false
+                    false,
+                    true
             );
         }
         return moves;
