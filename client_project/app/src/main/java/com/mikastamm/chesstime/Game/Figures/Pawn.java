@@ -27,9 +27,18 @@ public class Pawn extends Figure {
         final int movePatternCount = 3;
         FigureMovePattern[] moves = new FigureMovePattern[movePatternCount];
 
-        moves[0] = new FigureMovePattern(new Point(0,1), false, false, false);
-        moves[1] = new FigureMovePattern(new Point(1,1), false, true, false);
-        moves[2] = new FigureMovePattern(new Point(-1,1), false, true, false);
+        if(isWhite)
+        {
+            moves[0] = new FigureMovePattern(new Point(0,-1), false, false, false);
+            moves[1] = new FigureMovePattern(new Point(1,-1), false, true, false);
+            moves[2] = new FigureMovePattern(new Point(-1,-1), false, true, false);
+        }
+        else{
+            moves[0] = new FigureMovePattern(new Point(0,1), false, false, false);
+            moves[1] = new FigureMovePattern(new Point(1,1), false, true, false);
+            moves[2] = new FigureMovePattern(new Point(-1,1), false, true, false);
+        }
+
 
 
         return moves;

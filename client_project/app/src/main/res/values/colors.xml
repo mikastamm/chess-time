@@ -3,4 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorFieldBlack">#222222</color>
+    <color name="colorFieldWhite">#ffffff</color>
+    <color name="colorFieldMove">#FF84D41B</color>
+    <color name="colorFieldCapture">#FFF18B1E</color>
+    <color name="colorFieldCantMove">#FFD21313</color>
+    <color name="colorFieldSelected">#FF4359AF</color>
+
+
+
 </resources>

@@ -26,14 +26,16 @@ public class Queen extends Figure {
     public FigureMovePattern[] getValidMovePositions() {
         final int movePatternCount = 8;
         FigureMovePattern[] moves = new FigureMovePattern[movePatternCount];
-        for (int i = 0; i < movePatternCount; i++) {
-            moves[i] = new FigureMovePattern(
-                    new Point((int)Math.ceil(Math.cos(i*Math.toRadians(45))), (int)Math.ceil(Math.sin(i*Math.toRadians(45)))),
-                    true,
-                    false,
-                    true
-            );
-        }
+
+        moves[0] = new FigureMovePattern(new Point(0,1), true, false, true);
+        moves[1] = new FigureMovePattern(new Point(1,1), true, false, true);
+        moves[2] = new FigureMovePattern(new Point(1,0), true, false, true);
+        moves[3] = new FigureMovePattern(new Point(1,-1), true, false, true);
+        moves[4] = new FigureMovePattern(new Point(0,-1), true, false, true);
+        moves[5] = new FigureMovePattern(new Point(-1,-1), true, false, true);
+        moves[6] = new FigureMovePattern(new Point(-1,0), true, false, true);
+        moves[7] = new FigureMovePattern(new Point(-1,1), true, false, true);
+
         return moves;
     }
 }
