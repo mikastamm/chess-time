@@ -14,27 +14,30 @@ import com.mikastamm.chesstime.GUI.UserInterface.SquareImageButton;
 import com.mikastamm.chesstime.Game.Board.BoardState;
 import com.mikastamm.chesstime.Game.Board.HighlightedField;
 import com.mikastamm.chesstime.Game.Board.HighlightedFieldType;
+import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BoardAdapter extends BaseAdapter {
-    private BoardState boardState;
-    public boolean buttonsEnabled = true;
+    private Game game;
     private Context context;
     private View.OnClickListener clickListener;
-    private HighlightedField[] highlightedFields = new HighlightedField[0];
+    private Map<Point, HighlightedFieldType> highlightedFields = new HashMap<>();
 
-    public BoardAdapter(Context context, BoardState boardState, View.OnClickListener clickListener)
+    public BoardAdapter(Context context, Game game, View.OnClickListener clickListener)
     {
-        this.boardState = boardState;
+        this.game = game;
         this.context = context;
         this.clickListener = clickListener;
     }
 
-    public void setBoardState(BoardState boardState)
+    public void setGame(Game game)
     {
-        this.boardState = boardState;
+        this.game = game;
     }
-    public void setHighlightedFields(HighlightedField[] highlightedFields)
+    public void setHighlightedFields(Map<Point, HighlightedFieldType> highlightedFields)
     {
         this.highlightedFields = highlightedFields;
     }
@@ -75,12 +78,12 @@ public class BoardAdapter extends BaseAdapter {
         btn.setOnClickListener(clickListener);
 
         //Set Figure Drawable
-        if(boardState.board[y][x] != null)
-            btn.setImageResource(boardState.board[y][x].getDrawableResourceId());
+        if(game.boardState.board[y][x] != null)
+            btn.setImageResource(game.boardState.board[y][x].getDrawableResourceId());
         else
             btn.setImageResource(android.R.color.transparent);
 
-        HighlightedFieldType highlightedFieldType = getHighlightedFieldType(x,y);
+        HighlightedFieldType highlightedFieldType = highlightedFields.get(new Point(x,y));
         //Set field Background
         if((x + y % 2) % 2 == 0)
         {
@@ -130,15 +133,6 @@ public class BoardAdapter extends BaseAdapter {
         return btn;
     }
 
-    private HighlightedFieldType getHighlightedFieldType(int x, int y)
-    {
-        for (HighlightedField f:highlightedFields) {
-            if(f.field.x == x &&f.field.y == y)
-            {
-                return f.type;
-            }
-        }
-        return null;
-    }
+
 
 }

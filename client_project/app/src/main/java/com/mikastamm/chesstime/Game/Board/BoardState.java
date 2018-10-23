@@ -1,6 +1,7 @@
 package com.mikastamm.chesstime.Game.Board;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import com.mikastamm.chesstime.Game.Figures.Bishop;
 import com.mikastamm.chesstime.Game.Figures.Figure;
@@ -32,7 +33,7 @@ public class BoardState {
 
     public Figure getFigure(Point p)
     {
-        return board[p.x][p.y];
+        return board[p.y][p.x];
     }
 
     public void addBoardStateChangeListener(BoardStateChangeListener listener)
@@ -43,6 +44,7 @@ public class BoardState {
     //Calls all registered Listeners
     public void notifyBoardStateChanged()
     {
+        Log.i("BoardState", "NotifyBoardStateChanged called");
         for (BoardStateChangeListener l:listeners) {
             l.onBoardStateChanged();
         }

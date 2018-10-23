@@ -16,40 +16,43 @@ import com.mikastamm.chesstime.GUI.PresentationLogic.DefaultBoardPresenter;
 import com.mikastamm.chesstime.GUI.PresentationLogic.BoardAdapter;
 import com.mikastamm.chesstime.Game.Board.BoardState;
 import com.mikastamm.chesstime.Game.Board.HighlightedField;
+import com.mikastamm.chesstime.Game.Board.HighlightedFieldType;
 import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.Logic.GameplayManager;
 import com.mikastamm.chesstime.Game.Logic.GameplayManagerFactory;
 import com.mikastamm.chesstime.Game.Logic.GamesManager;
 import com.mikastamm.chesstime.R;
 
+import java.util.Map;
+
 
 public class BoardFragment extends Fragment implements BoardView {
 
-    private Game game;
-    private GameplayManager gameplayManager;
-    private ImageButton[][] fields = new ImageButton[8][];
     private BoardPresenter boardPresenter;
     private BoardAdapter boardAdapter;
+    private Game game;
 
     public BoardFragment() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public void notifyBoardStateChanged() {
         boardAdapter.notifyDataSetChanged();
     }
 
+
     @Override
-    public void setBoardEnabled(boolean enabled) {
-        boardAdapter.buttonsEnabled = enabled;
-        notifyBoardStateChanged();
+    public void setHighlightedFields(Map<Point, HighlightedFieldType> highlightedFields){
+        boardAdapter.setHighlightedFields(highlightedFields);
+        boardAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void setHighlightedFields(HighlightedField[] highlightedFields){
-        boardAdapter.setHighlightedFields(highlightedFields);
-        boardAdapter.notifyDataSetChanged();
+    public void setGame(Game game) {
+        this.game = game;
     }
 
 
@@ -77,7 +80,7 @@ public class BoardFragment extends Fragment implements BoardView {
             }
         };
 
-        boardAdapter = new BoardAdapter(getContext(),BoardState.getStartingBoardState(), clickListener);
+        boardAdapter = new BoardAdapter(getContext(),game, clickListener);
         boardview.setAdapter(boardAdapter);
 
 
