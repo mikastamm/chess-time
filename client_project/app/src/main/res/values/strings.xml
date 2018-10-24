@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chesstime">ChessTime</string>
+    <string name="search_opponent">Gegner\nsuchen</string>
+    <string name="display_rules">Spielregeln\nanzeigen</string>
+    <string name="your_games">Deine Partien</string>
 </resources>

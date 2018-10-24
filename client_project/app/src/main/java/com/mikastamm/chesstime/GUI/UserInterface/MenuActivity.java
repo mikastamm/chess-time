@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import com.mikastamm.chesstime.GUI.PresentationLogic.DefaultMenuPresenter;
@@ -23,7 +24,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
         presenter.onCreate();
         //Bind Search button to presenter
-        Button searchButton = findViewById(R.id.btnMenuActivitySearchGame);
+        Button searchButton = findViewById(R.id.btn_search_game);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
