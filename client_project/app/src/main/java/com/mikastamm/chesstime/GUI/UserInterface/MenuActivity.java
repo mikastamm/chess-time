@@ -1,15 +1,23 @@
 package com.mikastamm.chesstime.GUI.UserInterface;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.mikastamm.chesstime.GUI.PresentationLogic.DefaultMenuPresenter;
+import com.mikastamm.chesstime.GUI.PresentationLogic.GamesAdapter;
 import com.mikastamm.chesstime.GUI.PresentationLogic.IMenuPresenter;
+import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.R;
+
+import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity implements MenuView {
 
@@ -25,6 +33,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         presenter.onCreate();
         //Bind Search button to presenter
         Button searchButton = findViewById(R.id.btn_search_game);
+        ListView listView = (ListView) findViewById(R.id.lv_current_games);
+        listView.setAdapter(new GamesAdapter(this,presenter.getGames()));
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

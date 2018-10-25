@@ -7,6 +7,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.mikastamm.chesstime.GUI.UserInterface.MenuView;
+import com.mikastamm.chesstime.Game.Game;
+import com.mikastamm.chesstime.Game.Logic.ChessGamesManager;
+import com.mikastamm.chesstime.Game.Logic.GamesManager;
 import com.mikastamm.chesstime.Game.PersistenceManager;
 import com.mikastamm.chesstime.Networking.ServerCommunication.ServerCommunicator;
 
@@ -14,6 +17,7 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
     Context viewContext;
     MenuView view;
+    ChessGamesManager gamesManager;
 
     //Move to Model
   /*  BroadcastReceiver serverCommunicatorReceiver = new BroadcastReceiver() {
@@ -52,7 +56,7 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
     @Override
     public void onCreate() {
-
+        this.gamesManager = new ChessGamesManager(this.viewContext);
     }
 
     @Override
@@ -65,6 +69,12 @@ public class DefaultMenuPresenter implements IMenuPresenter {
         //Move to model
         //viewContext.unregisterReceiver(serverCommunicatorReceiver);
     }
+
+    @Override
+    public Game[] getGames(){
+        return gamesManager.getAllTestGames(); //TODO: remove later
+    }
+
 
     @Override
     public void findGame() {
