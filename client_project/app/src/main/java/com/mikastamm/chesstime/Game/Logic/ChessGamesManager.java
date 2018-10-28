@@ -30,6 +30,14 @@ public class ChessGamesManager implements GamesManager {
     public Game[] getAllGames() {
         return (Game[])games.values().toArray();
     }
+    //TODO: remove later
+    public Game[] getAllTestGames() {
+        Game[] testGames = new Game[5];
+        for (int i = 0; i < 5 ; i++){
+            testGames[i] = Game.getTestGame();
+        }
+        return testGames;
+    }
 
     @Override
     public void addGame(Game game, Context context) {
