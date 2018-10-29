@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import chesstimeserver.networking.FirebaseCommunicator;
+
 /**
  * Servlet implementation class SearchPlayerServlet
  */
@@ -32,7 +34,8 @@ public class SearchPlayerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		System.out.println("SearchGame Request received");
+		FirebaseCommunicator.sendStringFCM("Hello", UpdateFirebaseTokenServlet.userFirebaseToken);
 	}
 
 }

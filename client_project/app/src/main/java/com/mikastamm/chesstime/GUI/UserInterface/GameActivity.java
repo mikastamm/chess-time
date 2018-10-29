@@ -29,8 +29,8 @@ public class GameActivity extends AppCompatActivity {
 
         gameId = passedParameters.getString(BoardView.GAME_ID_BUNDLE_KEY);
         initBoardFragment(gameId);
-        whiteUserInfoFragment = initUserInfoFragment(gameId, R.id.opponentUserInfoPlaceholder, true);
-        blackUserInfoFragment = initUserInfoFragment(gameId, R.id.opponentUserInfoPlaceholder, false);
+        whiteUserInfoFragment = initUserInfoFragment(gameId, R.id.blackUserInfoPlaceholder, true);
+        blackUserInfoFragment = initUserInfoFragment(gameId, R.id.whiteUserInfoPlaceholder, false);
 
     }
 

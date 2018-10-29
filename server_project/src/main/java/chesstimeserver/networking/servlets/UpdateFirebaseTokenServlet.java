@@ -39,7 +39,7 @@ public class UpdateFirebaseTokenServlet extends HttpServlet {
 		
 		userFirebaseToken = newFirebaseToken;
 		
-		FirebaseCommunicator.sendTestFCM();
+	//	FirebaseCommunicator.sendTestFCM();
 	}
 
 }

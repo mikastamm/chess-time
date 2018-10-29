@@ -27,7 +27,41 @@ public class FirebaseCommunicator {
 	             .setTitle("Game found")
 	             .build();
 	    // FcmMessageResponse response = client.send(new DataUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, null));
+		// FcmMessageResponse response = client.send(new NotificationUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, payload));
+		// System.out.println("Sent FCM Succ:"+		 response.getNumberOfSuccess() + " Fail:"+response.getNumberOfFailure());
+		 try {
+			client.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//Send a Firebase Message to a client
+	public static void sendStringFCM(String message, String targetFirebaseId)
+	{
+		IFcmClientSettings settings = new FcmClientSettings();
+		FcmClient client = new FcmClient(settings);
+		 FcmMessageOptions options = FcmMessageOptions.builder()
+				 .setTimeToLive(Duration.ofHours(1))
+				 .build();
+		 
+	    
+	     
+	     
+	     NotificationPayload payload = NotificationPayload.builder()
+	             .setTag("TESTss")
+	             .build();
 		 FcmMessageResponse response = client.send(new NotificationUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, payload));
+		 //FcmMessageResponse response = client.send(new DataUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, message));
+
 		 System.out.println("Sent FCM Succ:"+		 response.getNumberOfSuccess() + " Fail:"+response.getNumberOfFailure());
+		 
+		 try {
+				client.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 }
