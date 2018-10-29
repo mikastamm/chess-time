@@ -8,7 +8,9 @@ import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.UserInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MoveValidator {
 
@@ -53,8 +55,63 @@ public class MoveValidator {
         FigureMovePattern[] movePatterns = figure.getValidMovePositions();
         for (FigureMovePattern p: movePatterns) {
             points.addAll(getMovePositionsFromMovePattern(p, position));
+
+            boolean hasToJump = false;
+            for(Point point : getMovePositionsFromMovePattern(p, position))
+            {
+
+                Figure figureAtPoint = game.boardState.board[point.y][point.x];
+
+                if((figureAtPoint == null || figureAtPoint.isWhite != figure.isWhite)
+                        && (!hasToJump || p.canJump))
+                {
+                    points.add(point);
+                }
+
+                if(figureAtPoint != null){
+                    hasToJump = true;
+                }
+            }
         }
         return points;
+    }
+
+    public Map<Point, HighlightedFieldType> getHighlightedFieldsOfFigure(Figure figure, Point position)
+    {
+        if(figure == null)
+            return new HashMap<>();
+
+        Map<Point, HighlightedFieldType> fields = new HashMap<>();
+        FigureMovePattern[] movePatterns = figure.getValidMovePositions();
+        for (FigureMovePattern p: movePatterns) {
+            boolean hasToJump = false;
+            for(Point point : getMovePositionsFromMovePattern(p, position))
+            {
+                Figure figureAtPoint = game.boardState.board[point.y][point.x];
+                HighlightedField result = null;
+
+                if(!hasToJump || p.canJump) {
+                    if (figureAtPoint == null) {
+                        result = new HighlightedField(point, HighlightedFieldType.MOVE);
+                    }
+
+                    if(figureAtPoint != null && figureAtPoint.isWhite != figure.isWhite)
+                    {
+                        result = new HighlightedField(point, HighlightedFieldType.CAPTURE);
+                    }
+
+                    if (figureAtPoint != null) {
+                        hasToJump = true;
+                    }
+                }
+
+                if(result!=null)
+                    fields.put(result.field, result.type);
+                else
+                    fields.put(point, HighlightedFieldType.CANT_MOVE);
+            }
+        }
+        return fields;
     }
 
     private List<Point> getMovePositionsFromMovePattern(FigureMovePattern pattern, Point position){

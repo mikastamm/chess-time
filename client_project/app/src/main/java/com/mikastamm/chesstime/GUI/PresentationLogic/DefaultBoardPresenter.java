@@ -26,7 +26,7 @@ public class DefaultBoardPresenter implements BoardPresenter {
         game.boardState.addBoardStateChangeListener(new BoardStateChangeListener() {
             @Override
             public void onBoardStateChanged() {
-                view.setHighlightedFields(gameplayManager.getHighlightedFields(gameplayManager.getSelectedField()));
+                view.setHighlightedFields(gameplayManager.getHighlightedFields(gameplayManager.getSelectedField(), UserManager.isPlayerWhite(game)));
                 view.notifyBoardStateChanged();
             }
         });
@@ -40,7 +40,7 @@ public class DefaultBoardPresenter implements BoardPresenter {
         {
             if (gameplayManager.getSelectedFigure() == null || !isFieldInMovePatternOfSelected(field, gameplayManager.getSelectedField())) {//Select field
                 gameplayManager.setSelectedField(field);
-                view.setHighlightedFields(gameplayManager.getHighlightedFields(field));
+                view.setHighlightedFields(gameplayManager.getHighlightedFields(field, UserManager.isPlayerWhite(game)));
             } else {//Move
                 Point from = gameplayManager.getSelectedField();
 
@@ -51,6 +51,6 @@ public class DefaultBoardPresenter implements BoardPresenter {
 
     private boolean isFieldInMovePatternOfSelected(Point field, Point selectedPosition)
     {
-         return gameplayManager.getHighlightedFields(selectedPosition).containsKey(field);
+         return gameplayManager.getHighlightedFields(selectedPosition, UserManager.isPlayerWhite(game)).containsKey(field);
     }
 }

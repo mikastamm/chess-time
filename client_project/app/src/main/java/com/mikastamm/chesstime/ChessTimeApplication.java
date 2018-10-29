@@ -12,6 +12,5 @@ public class ChessTimeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         gamesManager = new ChessGamesManager(this);
-        // Do something here.
     }
 }

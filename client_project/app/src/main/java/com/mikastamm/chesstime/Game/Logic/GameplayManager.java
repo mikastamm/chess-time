@@ -18,6 +18,6 @@ public interface GameplayManager {
     void moveFigure(Point from, Point to, UserInfo issueingUser);
     void setSelectedField(Point field);
     void clearSelectedField();
-    Map<Point, HighlightedFieldType> getHighlightedFields(Point forField);
+    Map<Point, HighlightedFieldType> getHighlightedFields(Point forField, boolean isIssueingPlayerWhite);
 
 }

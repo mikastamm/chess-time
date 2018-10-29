@@ -29,18 +29,14 @@ public class ChessGameplayManager implements GameplayManager {
     }
 
     @Override
-    public Map<Point, HighlightedFieldType> getHighlightedFields(Point forField) {
+    public Map<Point, HighlightedFieldType> getHighlightedFields(Point forField, boolean isIssueingPlayerWhite) {
         MoveValidator val = new MoveValidator(game);
 
         Map<Point, HighlightedFieldType> highlightedFields = new ArrayMap<>();
         Figure figure = game.boardState.board[forField.y][forField.x];
-        if(UserManager.isPlayerWhite(game) == game.isWhitesTurn && figure.isWhite == UserManager.isPlayerWhite(game))//Only highlight any fields if its the players turn and only for his figures
+        if(isIssueingPlayerWhite == game.isWhitesTurn && figure != null && figure.isWhite == isIssueingPlayerWhite)//Only highlight any fields if its the players turn and only for his figures
         {
-            List<Point> movables = val.getMoveLocationsOfFigure(getSelectedFigure(), new Point(selectedField));
-
-            for (int i = 0; i < movables.size(); i++) {
-                highlightedFields.put(movables.get(i), HighlightedFieldType.MOVE);
-            }
+            return val.getHighlightedFieldsOfFigure(figure, forField);
         }
         return highlightedFields;
     }

@@ -1,9 +1,15 @@
 package com.mikastamm.chesstime.Game.Logic;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.net.NetworkRequest;
 
+import com.mikastamm.chesstime.Game.Board.BoardUtil;
+import com.mikastamm.chesstime.Game.Figures.Figure;
 import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.PersistenceManager;
+import com.mikastamm.chesstime.Networking.NetworkEvents.NetworkEventDispatcher;
+import com.mikastamm.chesstime.Networking.NetworkEvents.NetworkEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +24,19 @@ public class ChessGamesManager implements GamesManager {
             games = new HashMap<>();
 
         PersistenceManager.storeGames(games, context);
+        setupNetworkEventListener();
+    }
+
+    private void setupNetworkEventListener(){
+        NetworkEventDispatcher.getInstance().eventListeners.add(new NetworkEventListener() {
+            @Override
+            public void onMoveReceived(String from, String to, String gameId) {
+                Game target = games.get(gameId);
+                Point fromPoint = BoardUtil.getPointFromFieldName(from);
+                Point toPoint = BoardUtil.getPointFromFieldName(to);
+                target.boardState.board[toPoint.y][toPoint.x] = target.boardState.board[fromPoint.y][fromPoint.x];
+            }
+        });
     }
 
     @Override
@@ -28,7 +47,8 @@ public class ChessGamesManager implements GamesManager {
 
     @Override
     public Game[] getAllGames() {
-        return (Game[])games.values().toArray();
+        Game[] gameArr = new Game[games.values().size()];
+        return games.values().toArray(gameArr);
     }
     //TODO: remove later
     public Game[] getAllTestGames() {

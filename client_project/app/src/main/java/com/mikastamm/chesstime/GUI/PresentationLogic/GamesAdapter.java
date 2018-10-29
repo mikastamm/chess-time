@@ -1,71 +1,70 @@
 package com.mikastamm.chesstime.GUI.PresentationLogic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mikastamm.chesstime.Game.Game;
+import com.mikastamm.chesstime.Game.PlayerInfo;
+import com.mikastamm.chesstime.Game.UserInfo;
+import com.mikastamm.chesstime.Game.UserManager;
 import com.mikastamm.chesstime.R;
 
-public class GamesAdapter extends BaseAdapter {
-    Context context;
-    Game[] data;
-    private static LayoutInflater inflater = null;
+import java.util.Map;
 
-    public GamesAdapter(Context context, Game[] games) {
-        // TODO Auto-generated constructor stub
+public class GamesAdapter extends BaseAdapter {
+    public Game[] games;
+    private Context context;
+
+    public GamesAdapter(Context context , Game[] games)
+    {
         this.context = context;
-        this.data = games;
-        inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.games = games;
     }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        return data.length;
+        return games.length;
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return data[position];
+        return null;
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
+        return 0;
     }
-//TODO: implement real data
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        View vi = convertView;
-        if (vi == null)
-            vi = inflater.inflate(R.layout.item_game, null);
-
-
-            TextView leftTextView = (TextView) vi.findViewById(R.id.txt_name_opponent);
-            TextView rightTextView = (TextView) vi.findViewById(R.id.txt_elo_opponent);
-            TextView centreTextView = (TextView) vi.findViewById(R.id.txt_game_time);
-
-            if (leftTextView != null) {
-                leftTextView.setText(data[position].playerBlack.name);
-            }
-            if (rightTextView != null) {
-                rightTextView.setText("Elo: " +Integer.toString(data[position].playerBlack.elo));
-            }
-            if (centreTextView != null) {
-                centreTextView.setText("1 Stunde, 2 Minuten");
-            }
+        if(convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.item_game, parent, false);
+        }
 
 
-        return vi;
+        UserInfo oppenent = UserManager.getPlayer().equals(games[position].playerBlack) ? games[position].playerWhite : games[position].playerBlack;
+
+        TextView leftTextView = (TextView) convertView.findViewById(R.id.txt_name_opponent);
+        TextView rightTextView = (TextView) convertView.findViewById(R.id.txt_elo_opponent);
+        TextView centreTextView = (TextView) convertView.findViewById(R.id.txt_game_time);
+
+        if (leftTextView != null) {
+            leftTextView.setText(oppenent.name);
+        }
+        if (rightTextView != null) {
+            rightTextView.setText("Elo: " + oppenent.elo);
+        }
+        if (centreTextView != null) {
+            centreTextView.setText("1 Stunde, 2 Minuten");
+        }
+
+        return convertView;
     }
 }
-

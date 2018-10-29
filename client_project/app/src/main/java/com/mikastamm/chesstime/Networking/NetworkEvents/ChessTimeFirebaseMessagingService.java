@@ -30,7 +30,8 @@ public class ChessTimeFirebaseMessagingService extends com.google.firebase.messa
     Log.d("ChessTime", "FCM Received");
         Log.i("ChessTime", "FCM Received");
 
-        sendNotification(remoteMessage.getNotification());
+        String data = remoteMessage.getData().get("data");
+        Log.i("Firebase","Received firebase data:" + data);
     }
 
     private void sendNotification(RemoteMessage.Notification notification) {

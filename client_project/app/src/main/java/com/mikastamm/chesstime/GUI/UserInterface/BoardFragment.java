@@ -32,12 +32,6 @@ public class BoardFragment extends Fragment implements BoardView {
     private BoardAdapter boardAdapter;
     private Game game;
 
-    public BoardFragment() {
-        // Required empty public constructor
-    }
-
-
-
     @Override
     public void notifyBoardStateChanged() {
         boardAdapter.notifyDataSetChanged();
