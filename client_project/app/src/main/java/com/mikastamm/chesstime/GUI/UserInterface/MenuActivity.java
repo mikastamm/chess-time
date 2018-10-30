@@ -40,7 +40,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
 
         final ListView lvGames = findViewById(R.id.lv_current_games);
-        adapter = new GamesAdapter(this, ChessTimeApplication.gamesManager.getAllGames());
+        adapter = new GamesAdapter(this, ChessTimeApplication.gamesManager.getAllTestGames());
         lvGames.setAdapter(adapter);
         lvGames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

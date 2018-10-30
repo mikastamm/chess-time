@@ -4,6 +4,7 @@
     android:id="@+id/gvChessboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:numColumns="8"
     android:horizontalSpacing="0dp"
     android:verticalSpacing="0dp"

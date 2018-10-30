@@ -6,7 +6,7 @@ import com.mikastamm.chesstime.Game.Logic.ChessGamesManager;
 import com.mikastamm.chesstime.Game.Logic.GamesManager;
 
 public class ChessTimeApplication extends Application {
-    public static GamesManager gamesManager;
+    public static ChessGamesManager gamesManager;
 
     @Override
     public void onCreate() {
