@@ -2,7 +2,7 @@ package com.mikastamm.chesstime.Game;
 
 public class UserInfo {
     public String name;
-    public int elo;
+    public String elo;
 
     @Override
     public boolean equals(Object obj) {

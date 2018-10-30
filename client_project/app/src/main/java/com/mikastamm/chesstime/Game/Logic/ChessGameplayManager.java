@@ -3,14 +3,15 @@ package com.mikastamm.chesstime.Game.Logic;
 import android.graphics.Point;
 import android.util.ArrayMap;
 
+import com.mikastamm.chesstime.ChessTimeApplication;
 import com.mikastamm.chesstime.Game.Board.HighlightedField;
 import com.mikastamm.chesstime.Game.Board.HighlightedFieldType;
 import com.mikastamm.chesstime.Game.Board.MoveValidator;
 import com.mikastamm.chesstime.Game.Figures.Figure;
+import com.mikastamm.chesstime.Game.Figures.King;
 import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.UserInfo;
 import com.mikastamm.chesstime.Game.UserManager;
-
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class ChessGameplayManager implements GameplayManager {
 
     @Override
     public void moveFigure(Point from, Point to, UserInfo issuingUser) {
+        Figure toFigure = game.boardState.getFigure(to);
         game.boardState.board[to.y][to.x] = game.boardState.getFigure(from);
         game.boardState.board[from.y][from.x] = null;
         game.isWhitesTurn = !game.isWhitesTurn;
@@ -81,7 +83,12 @@ public class ChessGameplayManager implements GameplayManager {
             }).start();
         }
 
+        //Check for win & notify the Change listener
+        if(toFigure.getClass() == King.class)
+            game.notifyGameOver(issuingUser.equals(UserManager.getPlayer()));
+
         game.boardState.notifyBoardStateChanged();
+        ChessTimeApplication.gamesManager.saveGames();
     }
 
     @Override

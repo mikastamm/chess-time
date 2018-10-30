@@ -7,7 +7,10 @@ import android.net.NetworkRequest;
 import com.mikastamm.chesstime.Game.Board.BoardUtil;
 import com.mikastamm.chesstime.Game.Figures.Figure;
 import com.mikastamm.chesstime.Game.Game;
+import com.mikastamm.chesstime.Game.GameFactory;
 import com.mikastamm.chesstime.Game.PersistenceManager;
+import com.mikastamm.chesstime.Game.UserManager;
+import com.mikastamm.chesstime.Networking.NetworkEvents.GameFoundData;
 import com.mikastamm.chesstime.Networking.NetworkEvents.NetworkEventDispatcher;
 import com.mikastamm.chesstime.Networking.NetworkEvents.NetworkEventListener;
 
@@ -16,8 +19,10 @@ import java.util.Map;
 
 public class ChessGamesManager implements GamesManager {
     private Map<String, Game> games;
+    private Context context;
 
     public ChessGamesManager(Context context){
+        this.context = context;
         games = PersistenceManager.getGames(context);
 
         if(games == null)
@@ -34,7 +39,15 @@ public class ChessGamesManager implements GamesManager {
                 Game target = games.get(gameId);
                 Point fromPoint = BoardUtil.getPointFromFieldName(from);
                 Point toPoint = BoardUtil.getPointFromFieldName(to);
-                target.boardState.board[toPoint.y][toPoint.x] = target.boardState.board[fromPoint.y][fromPoint.x];
+                GameplayManager gpm = new ChessGameplayManager();
+                gpm.setGame(target);
+                gpm.moveFigure(fromPoint, toPoint, UserManager.isPlayerWhite(target) ? target.playerBlack : target.playerWhite);
+            }
+
+            @Override
+            public void onGameFound(GameFoundData data) {
+                games.put(data.game_id, GameFactory.newGame(data));
+                saveGames();
             }
         });
     }
@@ -71,5 +84,10 @@ public class ChessGamesManager implements GamesManager {
         games.remove(gameId);
         PersistenceManager.storeGames(games, context);
 
+    }
+
+    @Override
+    public void saveGames() {
+        PersistenceManager.storeGames(games, context);
     }
 }

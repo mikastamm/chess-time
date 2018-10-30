@@ -1,5 +1,7 @@
 package com.mikastamm.chesstime.Networking.NetworkEvents;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -7,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NetworkEventDispatcher {
-    public static final String KIND_RECEIVED_TURN = "oppenent_turn";
+    static final String KIND_RECEIVED_TURN = "oppenent_turn";
+    static final String KIND_GAME_FOUND = "new_game";
+    static final String KIND_GAME_OVER = "game_over";
+
     private static NetworkEventDispatcher instance;
     public static NetworkEventDispatcher getInstance(){
         if(instance == null)
@@ -25,8 +30,26 @@ public class NetworkEventDispatcher {
         String kind = jsonObject.get("kind").getAsString();
         if(kind.equals(KIND_RECEIVED_TURN))
         {
-            ReceivedMove move = gson.fromJson(msg, ReceivedMove.class);
+            ReceivedMoveData move = gson.fromJson(msg, ReceivedMoveData.class);
+            Log.i("NetworkEventDispatcher","Received opponent turn!" + move.game_id);
+
             notifyMoveReceived(move.from, move.to, move.game_id);
+        }
+        else if(kind.equals(KIND_GAME_FOUND))
+        {
+            GameFoundData data = gson.fromJson(msg, GameFoundData.class);
+            Log.i("NetworkEventDispatcher","Received new Game! " + data.game_id);
+
+            notifyGameFound(data);
+        }
+
+    }
+
+    private void notifyGameFound(GameFoundData data)
+    {
+        for(NetworkEventListener l : eventListeners)
+        {
+            l.onGameFound(data);
         }
     }
 

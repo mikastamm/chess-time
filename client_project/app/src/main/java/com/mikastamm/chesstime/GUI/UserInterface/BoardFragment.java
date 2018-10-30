@@ -1,6 +1,9 @@
 package com.mikastamm.chesstime.GUI.UserInterface;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,6 +50,21 @@ public class BoardFragment extends Fragment implements BoardView {
     @Override
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    @Override
+    public void notifyGameOver(boolean winner) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("You" + (winner ? "Won!" : "Lost!"))
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                       Intent intent = new Intent(getContext(), MenuActivity.class);
+                       startActivity(intent);
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 

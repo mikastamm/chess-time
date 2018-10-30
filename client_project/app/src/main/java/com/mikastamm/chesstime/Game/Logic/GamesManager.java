@@ -9,4 +9,5 @@ public interface GamesManager {
     Game[] getAllGames();
     void addGame(Game game, Context context);
     void deleteGame(String gameId, Context context);
+    void saveGames();
 }

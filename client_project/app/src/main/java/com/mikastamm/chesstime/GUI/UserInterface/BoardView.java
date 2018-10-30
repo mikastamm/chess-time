@@ -14,4 +14,5 @@ public interface BoardView {
     void notifyBoardStateChanged();
     void setHighlightedFields(Map<Point, HighlightedFieldType> highlightedFields);
     void setGame(Game game);
+    void notifyGameOver(boolean winner);
 }

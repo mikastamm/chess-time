@@ -8,6 +8,14 @@ public class Game {
     public UserInfo playerBlack;
     public BoardState boardState;
     public boolean isWhitesTurn = true;
+    public GameStateChangeListener listener;
+
+    public void notifyGameOver(boolean isPlayerWinner)
+    {
+        if(listener != null)
+            listener.onGameOver(isPlayerWinner);
+    }
+
     public UserInfo getPlayerWhoseTurnItIs()
     {
         if(isWhitesTurn)
@@ -15,6 +23,7 @@ public class Game {
         else
             return playerBlack;
     }
+
 
     //TODO: Remove later
     public static Game getTestGame(){
@@ -24,10 +33,10 @@ public class Game {
         UserInfo userInfo = new UserInfo();
         PlayerInfo playerInfo = new PlayerInfo();
         userInfo.name = "opponent";
-        userInfo.elo = 112;
+        userInfo.elo = "112";
 
         playerInfo.name = "player";
-        playerInfo.elo = 222;
+        playerInfo.elo = "222";
         playerInfo.passwordToken = "";
 
         game.playerBlack = userInfo;

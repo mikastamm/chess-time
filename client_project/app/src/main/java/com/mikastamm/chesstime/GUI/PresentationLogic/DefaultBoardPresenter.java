@@ -9,6 +9,7 @@ import com.mikastamm.chesstime.Game.Board.BoardStateChangeListener;
 import com.mikastamm.chesstime.Game.Board.HighlightedField;
 import com.mikastamm.chesstime.Game.Board.MoveValidator;
 import com.mikastamm.chesstime.Game.Game;
+import com.mikastamm.chesstime.Game.GameStateChangeListener;
 import com.mikastamm.chesstime.Game.Logic.GameplayManager;
 import com.mikastamm.chesstime.Game.Logic.GameplayManagerFactory;
 import com.mikastamm.chesstime.Game.UserManager;
@@ -23,6 +24,14 @@ public class DefaultBoardPresenter implements BoardPresenter {
         this.view = view;
         game = ChessTimeApplication.gamesManager.getGame(gameId);
         view.setGame(game);
+
+        game.listener = new GameStateChangeListener() {
+            @Override
+            public void onGameOver(boolean winner) {
+                view.notifyGameOver(winner);
+            }
+        };
+
         game.boardState.addBoardStateChangeListener(new BoardStateChangeListener() {
             @Override
             public void onBoardStateChanged() {

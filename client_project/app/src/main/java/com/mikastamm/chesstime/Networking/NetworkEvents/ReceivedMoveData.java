@@ -1,6 +1,6 @@
 package com.mikastamm.chesstime.Networking.NetworkEvents;
 
-public class ReceivedMove {
+public class ReceivedMoveData {
     public String kind;
     public String game_id;
     public String from;

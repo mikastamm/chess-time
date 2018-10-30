@@ -8,7 +8,7 @@ public class UserManager {
         //TODO: Replace with real player management
         PlayerInfo playerInfo =  new PlayerInfo();
         playerInfo.name = "player";
-        playerInfo.elo = 222;
+        playerInfo.elo = "222";
         playerInfo.passwordToken = "";
         return playerInfo;
     }

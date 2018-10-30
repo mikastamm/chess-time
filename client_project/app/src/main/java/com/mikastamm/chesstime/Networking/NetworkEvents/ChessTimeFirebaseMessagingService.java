@@ -29,9 +29,9 @@ public class ChessTimeFirebaseMessagingService extends com.google.firebase.messa
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Log.i("ChessTime", "FCM Received");
-
         String data = remoteMessage.getNotification().getTag();
+        NetworkEventDispatcher.getInstance().notifyEventReceived(data);
+
         Log.i("Firebase","Received firebase data:" + data);
     }
 
