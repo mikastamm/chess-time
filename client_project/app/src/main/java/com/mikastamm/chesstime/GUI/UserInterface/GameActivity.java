@@ -3,6 +3,7 @@ package com.mikastamm.chesstime.GUI.UserInterface;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 
 import com.mikastamm.chesstime.ChessTimeApplication;
 import com.mikastamm.chesstime.Game.Game;
@@ -22,13 +23,14 @@ public class GameActivity extends AppCompatActivity {
         String gameId;
 
         ////Adds a test game to the gamesmanager
-        //ChessTimeApplication.gamesManager.addGame(Game.getTestGame(), this);
+        ChessTimeApplication.gamesManager.addGame(Game.getTestGame(), this);
 
         //Get the GameId of the Game this GameActivity represents, which was passed as a parameter in a Bundle when the Activity was created
         Bundle passedParameters = getIntent().getExtras();
 
         gameId = passedParameters.getString(BoardView.GAME_ID_BUNDLE_KEY);
         initBoardFragment(gameId);
+
         whiteUserInfoFragment = initUserInfoFragment(gameId, R.id.blackUserInfoPlaceholder, true);
         blackUserInfoFragment = initUserInfoFragment(gameId, R.id.whiteUserInfoPlaceholder, false);
 
