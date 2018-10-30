@@ -2,18 +2,30 @@ package com.mikastamm.chesstime.Game;
 
 import com.mikastamm.chesstime.Game.Board.BoardState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
     public String id;
     public UserInfo playerWhite;
     public UserInfo playerBlack;
     public BoardState boardState;
     public boolean isWhitesTurn = true;
-    public GameStateChangeListener listener;
+    public List<GameStateChangeListener> listeners = new ArrayList<>();
 
     public void notifyGameOver(boolean isPlayerWinner)
     {
-        if(listener != null)
-            listener.onGameOver(isPlayerWinner);
+        for (GameStateChangeListener l: listeners
+             ) {
+            l.onGameOver(isPlayerWinner);
+        }
+    }
+
+    public void notifyTurnChanged(boolean isWhitesTurn)
+    {
+        for (GameStateChangeListener l: listeners) {
+            l.onTurnChanged(isWhitesTurn);
+        }
     }
 
     public UserInfo getPlayerWhoseTurnItIs()

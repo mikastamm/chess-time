@@ -56,7 +56,7 @@ public class BoardFragment extends Fragment implements BoardView {
     @Override
     public void notifyGameOver(boolean winner) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("You" + (winner ? "Won!" : "Lost!"))
+        builder.setMessage("You " + (winner ? "Won!" : "Lost!"))
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -66,6 +66,11 @@ public class BoardFragment extends Fragment implements BoardView {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public Map<Point, HighlightedFieldType> getHighlightedFields() {
+        return boardAdapter.getHighlightedFields();
     }
 
 

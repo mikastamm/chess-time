@@ -33,6 +33,10 @@ public class BoardAdapter extends BaseAdapter {
         this.clickListener = clickListener;
     }
 
+    public Map<Point, HighlightedFieldType> getHighlightedFields(){
+        return highlightedFields;
+    }
+
     public void setGame(Game game)
     {
         this.game = game;

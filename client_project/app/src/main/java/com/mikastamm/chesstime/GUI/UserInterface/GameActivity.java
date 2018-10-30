@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity {
         String gameId;
 
         ////Adds a test game to the gamesmanager
-        ChessTimeApplication.gamesManager.addGame(Game.getTestGame(), this);
+        //ChessTimeApplication.gamesManager.addGame(Game.getTestGame(), this);
 
         //Get the GameId of the Game this GameActivity represents, which was passed as a parameter in a Bundle when the Activity was created
         Bundle passedParameters = getIntent().getExtras();
