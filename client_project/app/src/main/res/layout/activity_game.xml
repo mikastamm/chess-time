@@ -4,17 +4,16 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
     <FrameLayout
-        android:id="@+id/UserInfoPlaceholder"
+        android:id="@+id/whiteUserInfoPlaceholder"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentTop="true"/>
+        android:layout_width="match_parent"/>
 <FrameLayout
     android:id="@+id/boardFragmentPlaceholder"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"/>
 <FrameLayout
-    android:id="@+id/opponentUserInfoPlaceholder"
+    android:id="@+id/blackUserInfoPlaceholder"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:layout_alignParentBottom="true"/>

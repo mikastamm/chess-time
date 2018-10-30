@@ -15,6 +15,8 @@ import com.mikastamm.chesstime.Game.PersistenceManager;
 import com.mikastamm.chesstime.Networking.ServerCommunication.ServerCommunicator;
 import com.mikastamm.chesstime.R;
 
+import java.util.Map;
+
 public class ChessTimeFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     @Override
     public void onNewToken(String token){
@@ -26,11 +28,10 @@ public class ChessTimeFirebaseMessagingService extends com.google.firebase.messa
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // ...
-    Log.d("ChessTime", "FCM Received");
+
         Log.i("ChessTime", "FCM Received");
 
-        String data = remoteMessage.getData().get("data");
+        String data = remoteMessage.getNotification().getTag();
         Log.i("Firebase","Received firebase data:" + data);
     }
 

@@ -1,6 +1,7 @@
 package com.mikastamm.chesstime.Networking.ServerCommunication;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.mikastamm.chesstime.Networking.NetworkConstants;
 
@@ -116,6 +117,7 @@ class RestServerCommunicator implements IServerCommunicator{
 
     private void sendFindGameRequest(final String passwordToken){
         URL requestUrl;
+        Log.i("feck","Find game request sent");
         try{
             requestUrl = new URL(NetworkConstants.ServerBaseUrl + NetworkConstants.FindGameRestPath);
 

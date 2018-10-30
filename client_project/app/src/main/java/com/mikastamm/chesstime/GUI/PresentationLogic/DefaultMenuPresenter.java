@@ -54,6 +54,7 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
     }
 
+
     @Override
     public void onCreate() {
         this.gamesManager = new ChessGamesManager(this.viewContext);
@@ -90,6 +91,7 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
         String firebaseToken = PersistenceManager.getFirebaseId(viewContext);
         ServerCommunicator.getInstance().updateFirebaseToken("", FirebaseInstanceId.getInstance().getToken());
+        ServerCommunicator.getInstance().findGame("");
         Log.i("ChessTime", "FirebaseToken:"+firebaseToken);
     }
 }
