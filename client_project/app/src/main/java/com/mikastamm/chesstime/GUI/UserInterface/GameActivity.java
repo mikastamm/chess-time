@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    private void initBoardFragment(String gameId){
+    private void initBoardFragment(String gameId) {
         //Replace the Placeholder view with a new Instance of the BoardFragment
         //This is done to be able to pass the GameplayManager as a Parameter to the Fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    private UserInfoFragment initUserInfoFragment(String gameId, int placeholderId, boolean isWhite){
+    private UserInfoFragment initUserInfoFragment(String gameId, int placeholderId, boolean isWhite) {
         //Replace the Placeholder view with a new Instance of the BoardFragment
         //This is done to be able to pass the GameplayManager as a Parameter to the Fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
