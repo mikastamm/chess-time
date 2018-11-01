@@ -32,12 +32,21 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("REGISTERSERVLET");
 		String name = request.getHeader("name");
 		String fbid = request.getHeader("firebase_instance_id");
-		String pwtoken = DatabaseContainer.applicationDatabase.registerUser(name);
+		System.out.println("Register received name "+ name +" , fbid"+fbid);
+
+		String pwtoken = DatabaseContainer.getApplicationDatabase().registerUser(name);
 		if(pwtoken == null) //Name vergeben
 		{
-			response.setStatus(403);
+			RegisterData data = new RegisterData();
+			data.password_token = null;
+			Gson gson = new Gson();
+			String json = gson.toJson(data, RegisterData.class);
+			FirebaseCommunicator.sendStringFCM(json, fbid);
+			System.out.println("Name vergeben");
+
 		}
 		else {
 			RegisterData data = new RegisterData();
@@ -45,6 +54,8 @@ public class RegisterServlet extends HttpServlet {
 			Gson gson = new Gson();
 			String json = gson.toJson(data, RegisterData.class);
 			FirebaseCommunicator.sendStringFCM(json, fbid);
+			System.out.println("Register successhans");
+
 		}
 	}
 

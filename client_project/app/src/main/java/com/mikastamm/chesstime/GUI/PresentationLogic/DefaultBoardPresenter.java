@@ -44,7 +44,7 @@ public class DefaultBoardPresenter implements BoardPresenter {
         game.boardState.addBoardStateChangeListener(new BoardStateChangeListener() {
             @Override
             public void onBoardStateChanged() {
-                view.setHighlightedFields(gameplayManager.getHighlightedFields(gameplayManager.getSelectedField(), UserManager.isPlayerWhite(game)));
+                view.setHighlightedFields(gameplayManager.getHighlightedFields(gameplayManager.getSelectedField(), ChessTimeApplication.userManager.isPlayerWhite(game)));
                 view.notifyBoardStateChanged();
             }
         });
@@ -54,18 +54,18 @@ public class DefaultBoardPresenter implements BoardPresenter {
     @Override
     public void onFieldClicked(Point field) {
         Log.d("FieldClicked",field.x+","+field.y);
-        if(UserManager.getPlayer().equals(game.getPlayerWhoseTurnItIs())) //Only do anything if its the players turn
+        if(ChessTimeApplication.userManager.getPlayer().equals(game.getPlayerWhoseTurnItIs())) //Only do anything if its the players turn
         {
             if (gameplayManager.getSelectedFigure() == null || !isFieldInMovePatternOfSelected(field, gameplayManager.getSelectedField())) {//Select field
                 gameplayManager.setSelectedField(field);
-                view.setHighlightedFields(gameplayManager.getHighlightedFields(field, UserManager.isPlayerWhite(game)));
+                view.setHighlightedFields(gameplayManager.getHighlightedFields(field, ChessTimeApplication.userManager.isPlayerWhite(game)));
             } else {//Move
                 Map<Point, HighlightedFieldType> highlightedFields = view.getHighlightedFields();
                 if(highlightedFields != null) {
                     HighlightedFieldType fieldType = view.getHighlightedFields().get(field);
 
                     if(fieldType == HighlightedFieldType.CAPTURE || fieldType == HighlightedFieldType.MOVE)
-                        gameplayManager.moveFigure(gameplayManager.getSelectedField(), field, UserManager.getPlayer());
+                        gameplayManager.moveFigure(gameplayManager.getSelectedField(), field, ChessTimeApplication.userManager.getPlayer());
                 }
             }
         }
@@ -73,6 +73,6 @@ public class DefaultBoardPresenter implements BoardPresenter {
 
     private boolean isFieldInMovePatternOfSelected(Point field, Point selectedPosition)
     {
-         return gameplayManager.getHighlightedFields(selectedPosition, UserManager.isPlayerWhite(game)).containsKey(field);
+         return gameplayManager.getHighlightedFields(selectedPosition, ChessTimeApplication.userManager.isPlayerWhite(game)).containsKey(field);
     }
 }

@@ -1,8 +1,14 @@
 package chesstimeserver.database;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
+
+import javax.xml.bind.DatatypeConverter;
+
 import chesstimeserver.DatabaseContainer;
 import chesstimeserver.game.Game;
 import chesstimeserver.game.UserInfo;
@@ -17,7 +23,7 @@ public class MysqlGameplayDatabase implements GameplayDatabase {
 		ResultSet result = null;
 		//Datenbank verbindung erstellen
 		DatabaseConnection con = new DatabaseConnection();
-		if(con.connectToMysql("localhost","chesstime","root","chesstime") == false) {
+		if(con.connectToMysql() == false) {
 			return null;
 		}
 		//SQL-Abfrage passwordtoken_w
@@ -25,13 +31,12 @@ public class MysqlGameplayDatabase implements GameplayDatabase {
 			stmt = con.connection.createStatement();
 			result = stmt.executeQuery("SELECT * FROM SearchingPlayers ");
 			result.first(); // <- first entry of the result set
-			passwordToken = result.getString("player_white"); 
-			if (result != null) {
+			passwordToken = result.getString("password_token"); 
+			if (passwordToken != null) {
 				createGame(searcherPasswordToken,passwordToken);
-				Game newgame = new Game();
-				newgame = getGame("gameId");
-				return newgame;
-			} else return null;
+				return getGame("gameId");
+			} else 
+				return null;
 		} catch (Exception ex) {
 			System.out.println("Error during access + n" + ex.getMessage());
 			return null;
@@ -46,7 +51,7 @@ public class MysqlGameplayDatabase implements GameplayDatabase {
 		ResultSet result = null;
 		//Datenbank verbindung erstellen
 		DatabaseConnection con = new DatabaseConnection();
-		if(con.connectToMysql("localhost","chesstime","root","chesstime") == false) {
+		if(con.connectToMysql() == false) {
 			return null;
 		}
 		//SQL-Abfrage passwordtoken_w
@@ -68,29 +73,74 @@ public class MysqlGameplayDatabase implements GameplayDatabase {
 		} catch (Exception ex) {
 			System.out.println("Error during access + n" + ex.getMessage());
 			return null;
-		}
+		} 
 		Game game = new Game();
-	    game.playerBlack = DatabaseContainer.applicationDatabase.getUser(passwordtoken_b);
-	    game.playerWhite = DatabaseContainer.applicationDatabase.getUser(passwordtoken_w);
+	    game.playerBlack = DatabaseContainer.getApplicationDatabase().getUser(passwordtoken_b);
+	    game.playerWhite = DatabaseContainer.getApplicationDatabase().getUser(passwordtoken_w);
 		game.id = gameId;
 		return game;
 	}
 
-	@Override
-	public void writeGame(Game game) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public boolean saveGame(String gameid, String whiteToken, String blackToken){
+		DatabaseConnection con = new DatabaseConnection();
+
+		Statement stmt = null;
+		try {
+			stmt = con.connection.createStatement();
+			String query = "INSERT INTO Game idGame ,player_white, player_black) ";
+			query = query + "VALUES( "+gameid+", " +whiteToken+ ", "+blackToken+")";
+			stmt.executeUpdate(query);
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
 	}
 	
 	private String createGame(String passwordtoken_w, String passwordtoken_b) {
 		DatabaseConnection con = new DatabaseConnection();
-		Game newGame = new Game(id fehlt, passwordtoken_w, passwordtoken_b);
-		
-		if(con.connectToMysql("Localhost", "chesstime", "root", "chesstime") == false){
+
+		if(con.connectToMysql() == false){
 			return null;
 		}
-		con.saveGame (passwordtoken_w, passwordtoken_b);
+		
+		String gameid = generateGameId();
+		saveGame (gameid,passwordtoken_w, passwordtoken_b);
+		return gameid;
+	}
+	
+	private String generateGameId() {
+		Random r = new Random();
+		byte[] bytes = new byte[8];
+		r.nextBytes(bytes);
+		
+		  MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("MD5");
+			md.update(bytes);
+			byte[] digest = md.digest();
+			return DatatypeConverter.printHexBinary(digest).toUpperCase();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		  
+	}
 
+	@Override
+	public void addToSearchingUsers(String pwtoken) {
+		DatabaseConnection con = new DatabaseConnection();
+		try {
+			Statement statement = con.connection.createStatement();
+			statement.executeUpdate("INSERT INTO searchingusers VALUES(\""+pwtoken+"\")");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

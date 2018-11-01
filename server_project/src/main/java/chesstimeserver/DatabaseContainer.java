@@ -7,13 +7,21 @@ import chesstimeserver.database.MysqlGameplayDatabase;
 
 public class DatabaseContainer {
 
-	public static ApplicationDatabase applicationDatabase;
-	public static GameplayDatabase gameplayDatabase;
+	private static ApplicationDatabase applicationDatabase;
+	private static GameplayDatabase gameplayDatabase;
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		applicationDatabase = new MysqlApplicationDatabase();
-		gameplayDatabase = new MysqlGameplayDatabase();
+	public static ApplicationDatabase getApplicationDatabase() {
+		if(applicationDatabase == null)
+			applicationDatabase = new MysqlApplicationDatabase();
+		
+		return applicationDatabase;
 	}
-
+	
+	public static GameplayDatabase getGameplayDatabase() {
+		if(gameplayDatabase == null)
+			gameplayDatabase = new MysqlGameplayDatabase();
+		
+		return gameplayDatabase;
+	}
+	
 }

@@ -85,7 +85,7 @@ public class ChessGameplayManager implements GameplayManager {
 
         //Check for win & notify the Change listener
         if(toFigure != null  && toFigure.getClass() == King.class)
-            game.notifyGameOver(issuingUser.equals(UserManager.getPlayer()));
+            game.notifyGameOver(issuingUser.equals(ChessTimeApplication.userManager.getPlayer()));
 
         game.notifyTurnChanged(game.isWhitesTurn);
 

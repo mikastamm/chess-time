@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mikastamm.chesstime.ChessTimeApplication;
 import com.mikastamm.chesstime.Game.UserManager;
 
 import java.util.ArrayList;
@@ -12,8 +13,6 @@ import java.util.List;
 public class NetworkEventDispatcher {
     static final String KIND_RECEIVED_TURN = "oppenent_turn";
     static final String KIND_GAME_FOUND = "new_game";
-    static final String KIND_GAME_OVER = "game_over";
-    static final String KIND_PASSWORD_TOKEN = "password_token";
     static final String KIND_REGISTRATION_SUCCESS = "registration_result";
 
 
@@ -30,6 +29,7 @@ public class NetworkEventDispatcher {
     public List<NetworkEventListener> eventListeners = new ArrayList<>();
     public void notifyEventReceived(String msg){
        Gson gson = new Gson();
+       Log.i("NetworkEventDispatcher", "Deserializing:" + msg);
         JsonObject jsonObject = gson.fromJson( msg, JsonObject.class);
         String kind = jsonObject.get("kind").getAsString();
         if(kind.equals(KIND_RECEIVED_TURN))
@@ -39,17 +39,11 @@ public class NetworkEventDispatcher {
 
             notifyMoveReceived(move.from, move.to, move.game_id);
         }
-        else if(kind.equals(KIND_GAME_FOUND))
-        {
+        else if(kind.equals(KIND_GAME_FOUND)) {
             GameFoundData data = gson.fromJson(msg, GameFoundData.class);
-            Log.i("NetworkEventDispatcher","Received new Game! " + data.game_id);
+            Log.i("NetworkEventDispatcher", "Received new Game! " + data.game_id);
 
             notifyGameFound(data);
-        } else if(kind.equals(KIND_PASSWORD_TOKEN))
-        {
-            UserData data = gson.fromJson(msg, UserData.class);
-            notifyRegisterResponse(data.password_token);
-            Log.i("NetworkEventDispatcher","Received new password token " + data.password_token);
         }
         else if(kind.equals(KIND_REGISTRATION_SUCCESS))
         {
@@ -57,23 +51,16 @@ public class NetworkEventDispatcher {
             Log.i("NetworkEventDispatcher","Received passwordtoken! " + data.password_token);
             if(data.password_token == null) {
                 Log.i("NetworkEventDispatcher", "Username already in Use!! ");
-                UserManager.notifyRegistrationFailure();
+                ChessTimeApplication.userManager.notifyRegistrationFailure();
             }
             else{
-                UserManager.notifyRegistrationSuccess(data.password_token);
+                ChessTimeApplication.userManager.notifyRegistrationSuccess(data.password_token);
             }
 
         }
 
     }
 
-    private void notifyRegisterResponse(String token)
-    {
-        for(NetworkEventListener l : eventListeners)
-        {
-            l.onRegisterResponse(token);
-        }
-    }
 
     private void notifyGameFound(GameFoundData data)
     {

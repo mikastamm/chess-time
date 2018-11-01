@@ -25,7 +25,7 @@ class RestServerCommunicator implements IServerCommunicator{
         });
     }
 
-    public void registerUser(final String userName) {
+    public void register(final String userName) {
         //Networking cannot be done on UI Thread, so start a new Thread for the Request
         AsyncTask.execute(new Runnable() {
             @Override

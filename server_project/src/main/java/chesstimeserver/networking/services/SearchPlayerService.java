@@ -10,19 +10,10 @@ import chesstimeserver.networking.FirebaseCommunicator;
 public class SearchPlayerService {
 	public void searchPlayer(final String passwordToken)
 	{
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				doSearchPlayer(passwordToken);
-			}});
-	}
-	
-	private void doSearchPlayer(String passwordToken) {
-		Game game = DatabaseContainer.gameplayDatabase.findGame(passwordToken);
+		Game game = DatabaseContainer.getGameplayDatabase().findGame(passwordToken);
 		if(game != null)
 		{
-			UserInfo player = DatabaseContainer.applicationDatabase.getUser(passwordToken);
+			UserInfo player = DatabaseContainer.getApplicationDatabase().getUser(passwordToken);
 			SearchPlayerResponse resp = new SearchPlayerResponse();
 			resp.gameId = game.id;
 			resp.is_opponent_white = game.playerBlack.passwordToken.equals(passwordToken);
@@ -31,18 +22,23 @@ public class SearchPlayerService {
 			resp.opponent_name = (resp.is_opponent_white ? game.playerWhite.name : game.playerBlack.name)+"";
 			
 			Gson gson = new Gson();
-			String json = gson.toJson(resp, UserInfo.class);
+			String searcherJson = gson.toJson(resp, SearchPlayerResponse.class);
 
-			FirebaseCommunicator.sendStringFCM(json, player.firebaseToken);
+			resp.opponent_elo = player.elo+"";
+			resp.opponent_name = player.name;
+			resp.is_opponent_white = !resp.is_opponent_white;
+			
+			String searcheeJson = gson.toJson(resp, SearchPlayerResponse.class);
+			
+			FirebaseCommunicator.sendStringFCM(searcherJson, player.firebaseToken);
+			
+			//TODO: Replace with searchee pwtoken (need to implement searchPlayerByName method in database
+			//FirebaseCommunicator.sendStringFCM(searcheeJson, targetFirebaseId); 
+			
 		}
 		else {
-			try {
-				Thread.sleep(2500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			doSearchPlayer(passwordToken);
+			DatabaseContainer.getGameplayDatabase().addToSearchingUsers(passwordToken);
 		}
 	}
+	
 }

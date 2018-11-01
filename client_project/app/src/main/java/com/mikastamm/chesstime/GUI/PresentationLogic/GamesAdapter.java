@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.mikastamm.chesstime.ChessTimeApplication;
 import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.PlayerInfo;
 import com.mikastamm.chesstime.Game.UserInfo;
@@ -49,7 +50,7 @@ public class GamesAdapter extends BaseAdapter {
         }
 
 
-        UserInfo oppenent = UserManager.getPlayer().equals(games[position].playerBlack) ? games[position].playerWhite : games[position].playerBlack;
+        UserInfo oppenent = ChessTimeApplication.userManager.getPlayer().equals(games[position].playerBlack) ? games[position].playerWhite : games[position].playerBlack;
 
         TextView leftTextView = (TextView) convertView.findViewById(R.id.txt_name_opponent);
         TextView rightTextView = (TextView) convertView.findViewById(R.id.txt_elo_opponent);

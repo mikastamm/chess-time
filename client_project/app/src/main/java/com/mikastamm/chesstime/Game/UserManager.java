@@ -8,20 +8,21 @@ import java.util.List;
 public class UserManager {
     private Context context;
 
-    private static List<RegistrationListener> listeners = new ArrayList<>();
-    public static void addListener(RegistrationListener listener)
+
+    private List<RegistrationListener> listeners = new ArrayList<>();
+    public void addListener(RegistrationListener listener)
     {
         listeners.add(listener);
     }
 
-    public static void notifyRegistrationSuccess(String pwtoken){
+    public void notifyRegistrationSuccess(String pwtoken){
         for (RegistrationListener l:
              listeners) {
             l.onRegistrationSuccess(pwtoken);
         }
     }
 
-    public static void notifyRegistrationFailure(){
+    public void notifyRegistrationFailure(){
         for (RegistrationListener l:
                 listeners) {
             l.onRegistrationFailure();
@@ -32,12 +33,12 @@ public class UserManager {
         this.context = context;
     }
     //Return the PlayerInfo of the user using the app
-    public static PlayerInfo getPlayer() {
+    public PlayerInfo getPlayer() {
         //TODO: Replace with real player management
         PlayerInfo playerInfo = new PlayerInfo();
-        playerInfo.name = "player";
-        playerInfo.elo = "222";
-        playerInfo.passwordToken = "";
+        playerInfo.name = PersistenceManager.getPlayerName(context);
+        playerInfo.elo = "1100";
+        playerInfo.passwordToken = PersistenceManager.getPlayerToken(context);;
         return playerInfo;
     }
 
@@ -51,11 +52,11 @@ public class UserManager {
         PersistenceManager.storePlayerToken(context,playerToken);
     }
 
-    public static boolean isPlayerWhite(Game game) {
+    public boolean isPlayerWhite(Game game) {
         return game.playerWhite.equals(getPlayer());
     }
 
-    public void registerUser(Context context, String playerName){
+    public void saveUser(Context context, String playerName){
 
         PersistenceManager.storeUserName(context,playerName);
     }

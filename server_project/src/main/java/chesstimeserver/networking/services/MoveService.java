@@ -12,7 +12,7 @@ import chesstimeserver.networking.FirebaseCommunicator;
 
 public class MoveService {
 	public void move(String passwordToken,String gameId,String from,String to) {
-		Game game = DatabaseContainer.gameplayDatabase.getGame(gameId);
+		Game game = DatabaseContainer.getGameplayDatabase().getGame(gameId);
 		UserInfo requester, opponent;
 		requester = (game.playerBlack.passwordToken.equals(passwordToken) ? game.playerBlack : game.playerWhite);
 		opponent = (game.playerBlack.passwordToken.equals(passwordToken) ? game.playerWhite : game.playerBlack);

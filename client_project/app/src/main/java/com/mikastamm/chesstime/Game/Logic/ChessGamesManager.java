@@ -1,9 +1,13 @@
 package com.mikastamm.chesstime.Game.Logic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.net.NetworkRequest;
 
+import com.mikastamm.chesstime.ChessTimeApplication;
+import com.mikastamm.chesstime.GUI.UserInterface.GameActivity;
+import com.mikastamm.chesstime.GUI.UserInterface.MenuActivity;
 import com.mikastamm.chesstime.Game.Board.BoardUtil;
 import com.mikastamm.chesstime.Game.Figures.Figure;
 import com.mikastamm.chesstime.Game.Game;
@@ -41,19 +45,25 @@ public class ChessGamesManager implements GamesManager {
                 Point toPoint = BoardUtil.getPointFromFieldName(to);
                 GameplayManager gpm = new ChessGameplayManager();
                 gpm.setGame(target);
-                gpm.moveFigure(fromPoint, toPoint, UserManager.isPlayerWhite(target) ? target.playerBlack : target.playerWhite);
+                gpm.moveFigure(fromPoint, toPoint, ChessTimeApplication.userManager.isPlayerWhite(target) ? target.playerBlack : target.playerWhite);
             }
 
             @Override
             public void onGameFound(GameFoundData data) {
                 games.put(data.game_id, GameFactory.newGame(data));
                 saveGames();
+
+                Intent openGameActivityIntent = new Intent(context, GameActivity.class);
+                openGameActivityIntent.putExtra("GameId", data.game_id);
+                context.startActivity(openGameActivityIntent);
             }
             public void onRegisterResponse(String password_token){
 
             };
         });
     }
+
+
 
     @Override
     public Game getGame(String gameId) {

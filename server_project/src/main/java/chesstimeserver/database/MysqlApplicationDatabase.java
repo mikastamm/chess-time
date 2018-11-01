@@ -19,7 +19,7 @@ public class MysqlApplicationDatabase implements ApplicationDatabase {
 	public void updateFirebaseToken(String userPasswordToken, String newFirebaseToken) {
 		// TODO Auto-generated method stub
 		DatabaseConnection con = new DatabaseConnection();
-		if(con.connectToMysql("localhost","chesstime","root","chesstime") == false) {
+		if(con.connectToMysql() == false) {
 			return;
 		}
 		Statement stmt = null;
@@ -40,7 +40,7 @@ public class MysqlApplicationDatabase implements ApplicationDatabase {
 		ResultSet result = null;
 		//Datenbank verbindung erstellen
 		DatabaseConnection con = new DatabaseConnection();
-		if(con.connectToMysql("localhost","chesstime","root","chesstime") == false) {
+		if(con.connectToMysql() == false) {
 			return null;
 		}
 		
@@ -82,7 +82,7 @@ public class MysqlApplicationDatabase implements ApplicationDatabase {
 		Statement stmt = null;
 		//Datenbank verbindung erstellen
 		DatabaseConnection con = new DatabaseConnection();
-		if(con.connectToMysql("localhost","chesstime","root","chesstime") == false) {
+		if(con.connectToMysql() == false) {
 			return null;
 		}
 		
@@ -98,6 +98,7 @@ public class MysqlApplicationDatabase implements ApplicationDatabase {
 		}
 		catch(Exception ex)
 		{
+			ex.printStackTrace();
 			return null;
 		}
 	}

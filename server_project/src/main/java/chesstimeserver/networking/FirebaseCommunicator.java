@@ -50,7 +50,7 @@ public class FirebaseCommunicator {
 	     
 	     
 	     NotificationPayload payload = NotificationPayload.builder()
-	             .setTag("TESTss")
+	             .setTag(message)
 	             .build();
 		 FcmMessageResponse response = client.send(new NotificationUnicastMessage(options,targetFirebaseId, payload));
 		 //FcmMessageResponse response = client.send(new DataUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, message));
