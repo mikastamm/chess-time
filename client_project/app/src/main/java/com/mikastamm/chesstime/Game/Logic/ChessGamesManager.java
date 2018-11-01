@@ -49,6 +49,9 @@ public class ChessGamesManager implements GamesManager {
                 games.put(data.game_id, GameFactory.newGame(data));
                 saveGames();
             }
+            public void onRegisterResponse(String password_token){
+
+            };
         });
     }
 

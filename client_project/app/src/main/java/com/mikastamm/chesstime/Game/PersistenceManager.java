@@ -33,6 +33,7 @@ public class PersistenceManager {
     private static final String firebaseIdKey ="firebase_id";
     private static final String gamesKey ="games";
     private static final String playerNameKey = "playerName";
+    private static final String playerTokenKey = "playerToken";
 
 
     public static void storeFirebaseId(String id, Context context)
@@ -137,6 +138,27 @@ public class PersistenceManager {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(playerNameKey, playerName);
+        editor.apply();
+    }
+
+    public static String getPlayerName(Context context) {
+        String playerName;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        playerName = preferences.getString(playerNameKey,"undefined");
+        return playerName;
+    }
+
+    public static String getPlayerToken(Context context) {
+        String playerToken;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        playerToken = preferences.getString(playerTokenKey,"undefined");
+        return playerToken;
+    }
+
+    public static void storePlayerToken(Context context, String playerToken) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(playerTokenKey, playerToken);
         editor.apply();
     }
 

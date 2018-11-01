@@ -1,5 +1,6 @@
 package com.mikastamm.chesstime.Game;
 
+import com.mikastamm.chesstime.ChessTimeApplication;
 import com.mikastamm.chesstime.Game.Board.BoardState;
 
 import java.util.ArrayList;
@@ -47,9 +48,9 @@ public class Game {
         userInfo.name = "opponent";
         userInfo.elo = "112";
 
-        playerInfo.name = "player";
+        playerInfo.name = ChessTimeApplication.userManager.getPlayerName();
         playerInfo.elo = "222";
-        playerInfo.passwordToken = "";
+        playerInfo.passwordToken = ChessTimeApplication.userManager.getPlayerToken();
 
         game.playerBlack = userInfo;
         game.playerWhite = playerInfo;

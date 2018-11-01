@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mikastamm.chesstime.Game.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class NetworkEventDispatcher {
     static final String KIND_RECEIVED_TURN = "oppenent_turn";
     static final String KIND_GAME_FOUND = "new_game";
     static final String KIND_GAME_OVER = "game_over";
+    static final String KIND_PASSWORD_TOKEN = "password_token";
+
 
     private static NetworkEventDispatcher instance;
     public static NetworkEventDispatcher getInstance(){
@@ -41,8 +44,21 @@ public class NetworkEventDispatcher {
             Log.i("NetworkEventDispatcher","Received new Game! " + data.game_id);
 
             notifyGameFound(data);
+        } else if(kind.equals(KIND_PASSWORD_TOKEN))
+        {
+            UserData data = gson.fromJson(msg, UserData.class);
+            notifyRegisterResponse(data.password_token);
+            Log.i("NetworkEventDispatcher","Received new password token " + data.password_token);
         }
 
+    }
+
+    private void notifyRegisterResponse(String token)
+    {
+        for(NetworkEventListener l : eventListeners)
+        {
+            l.onRegisterResponse(token);
+        }
     }
 
     private void notifyGameFound(GameFoundData data)
