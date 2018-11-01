@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import chesstimeserver.networking.FirebaseCommunicator;
+import chesstimeserver.networking.services.UpdateFirebaseTokenService;
 
 
 public class UpdateFirebaseTokenServlet extends HttpServlet {
@@ -18,8 +19,6 @@ public class UpdateFirebaseTokenServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
-    public static String userFirebaseToken;
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String newFirebaseToken = null;
@@ -30,16 +29,13 @@ public class UpdateFirebaseTokenServlet extends HttpServlet {
 			newFirebaseToken = request.getHeader("firebase_token");
 			System.out.println("Received Firebase Token:"+newFirebaseToken);
 			passwordToken = request.getHeader("password_token");
+			
+			UpdateFirebaseTokenService service = new UpdateFirebaseTokenService();
+			service.updateFirebaseToken(passwordToken, newFirebaseToken);
 		}
 		catch(RuntimeException ex) {
 			System.out.println("Bad Request");
 			response.setStatus(400); //400: Bad Request
-		}
-		
-		
-		userFirebaseToken = newFirebaseToken;
-		
-	//	FirebaseCommunicator.sendTestFCM();
+		}	
 	}
-
 }
