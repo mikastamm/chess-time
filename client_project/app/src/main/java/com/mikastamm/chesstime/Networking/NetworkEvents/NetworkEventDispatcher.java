@@ -12,7 +12,10 @@ import java.util.List;
 public class NetworkEventDispatcher {
     static final String KIND_RECEIVED_TURN = "oppenent_turn";
     static final String KIND_GAME_FOUND = "new_game";
+    static final String KIND_GAME_OVER = "game_over";
+    static final String KIND_PASSWORD_TOKEN = "password_token";
     static final String KIND_REGISTRATION_SUCCESS = "registration_result";
+
 
     private static NetworkEventDispatcher instance;
     public static NetworkEventDispatcher getInstance(){
@@ -42,6 +45,11 @@ public class NetworkEventDispatcher {
             Log.i("NetworkEventDispatcher","Received new Game! " + data.game_id);
 
             notifyGameFound(data);
+        } else if(kind.equals(KIND_PASSWORD_TOKEN))
+        {
+            UserData data = gson.fromJson(msg, UserData.class);
+            notifyRegisterResponse(data.password_token);
+            Log.i("NetworkEventDispatcher","Received new password token " + data.password_token);
         }
         else if(kind.equals(KIND_REGISTRATION_SUCCESS))
         {
@@ -57,6 +65,14 @@ public class NetworkEventDispatcher {
 
         }
 
+    }
+
+    private void notifyRegisterResponse(String token)
+    {
+        for(NetworkEventListener l : eventListeners)
+        {
+            l.onRegisterResponse(token);
+        }
     }
 
     private void notifyGameFound(GameFoundData data)

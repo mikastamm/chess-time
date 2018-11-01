@@ -58,9 +58,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     }
 
     private void registerPlayer() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String playerName = prefs.getString("playerName", "empty");
-        if(playerName.equals("empty")) {
+        String playerName = ChessTimeApplication.userManager.getPlayerName();
+        if(playerName.equals("undefined")) {
             Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
             finish();

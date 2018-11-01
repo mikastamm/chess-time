@@ -3,6 +3,7 @@ package com.mikastamm.chesstime.Networking.ServerCommunication;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mikastamm.chesstime.Networking.NetworkConstants;
 
 import java.io.IOException;
@@ -22,6 +23,47 @@ class RestServerCommunicator implements IServerCommunicator{
                 sendFindGameRequest(passwordToken);
             }
         });
+    }
+
+    public void registerUser(final String userName) {
+        //Networking cannot be done on UI Thread, so start a new Thread for the Request
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                sendRegisterUserRequest(userName);
+            }
+        });
+    }
+    private void sendRegisterUserRequest(String userName) {
+        URL requestUrl;
+        try{
+            requestUrl = new URL(NetworkConstants.ServerBaseUrl + NetworkConstants.RegisterUserRestPath);
+
+            HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
+
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("name", userName);
+            connection.setRequestProperty("firebase_instance_id",  FirebaseInstanceId.getInstance().getToken());
+
+            int responseCode = connection.getResponseCode();
+            connection.disconnect();
+            if(responseCode == 200)
+            {
+                //successfully started search
+            }
+            else
+            {
+                //search failed
+            }
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        catch(IOException e)
+        {
+            //TODO: Handle expeption
+            e.printStackTrace();
+        }
     }
 
     @Override
