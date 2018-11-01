@@ -28,6 +28,9 @@
         <activity android:name=".GUI.UserInterface.GameActivity">
 
         </activity>
+        <activity android:name=".GUI.UserInterface.RegistrationActivity">
+
+        </activity>
     </application>
 
 </manifest>

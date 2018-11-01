@@ -2,6 +2,8 @@ package com.mikastamm.chesstime.GUI.UserInterface;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,12 +22,14 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
     private IMenuPresenter presenter = new DefaultMenuPresenter();
     private GamesAdapter adapter;
+    private boolean isRegistered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
 
+        setContentView(R.layout.activity_menu);
+        registerPlayer();
         presenter.setView(this);
 
         presenter.onCreate();
@@ -51,6 +55,16 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 MenuActivity.this.startActivity(openGameActivityIntent);
             }
         });
+    }
+
+    private void registerPlayer() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String playerName = prefs.getString("playerName", "empty");
+        if(playerName.equals("empty")) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override

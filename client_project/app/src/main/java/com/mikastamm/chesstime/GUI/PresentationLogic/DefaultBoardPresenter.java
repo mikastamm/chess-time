@@ -25,6 +25,7 @@ public class DefaultBoardPresenter implements BoardPresenter {
     public DefaultBoardPresenter(final BoardView view, final String gameId)
     {
         this.view = view;
+
         game = ChessTimeApplication.gamesManager.getGame(gameId);
         view.setGame(game);
 
