@@ -32,6 +32,7 @@ public class PersistenceManager {
 
     private static final String firebaseIdKey ="firebase_id";
     private static final String gamesKey ="games";
+    private static final String playerNameKey = "playerName";
 
 
     public static void storeFirebaseId(String id, Context context)
@@ -130,6 +131,13 @@ public class PersistenceManager {
         }
         else
             return null;
+    }
+
+    public static void storeUserName(Context context, String playerName) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(playerNameKey, playerName);
+        editor.apply();
     }
 
     //Currently unused
