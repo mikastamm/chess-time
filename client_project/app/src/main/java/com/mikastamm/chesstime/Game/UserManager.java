@@ -2,8 +2,31 @@ package com.mikastamm.chesstime.Game;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserManager {
     private Context context;
+
+    private static List<RegistrationListener> listeners = new ArrayList<>();
+    public static void addListener(RegistrationListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    public static void notifyRegistrationSuccess(String pwtoken){
+        for (RegistrationListener l:
+             listeners) {
+            l.onRegistrationSuccess(pwtoken);
+        }
+    }
+
+    public static void notifyRegistrationFailure(){
+        for (RegistrationListener l:
+                listeners) {
+            l.onRegistrationFailure();
+        }
+    }
 
     public UserManager(Context context){
         this.context = context;

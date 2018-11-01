@@ -14,6 +14,7 @@ public class NetworkEventDispatcher {
     static final String KIND_GAME_FOUND = "new_game";
     static final String KIND_GAME_OVER = "game_over";
     static final String KIND_PASSWORD_TOKEN = "password_token";
+    static final String KIND_REGISTRATION_SUCCESS = "registration_result";
 
 
     private static NetworkEventDispatcher instance;
@@ -33,7 +34,7 @@ public class NetworkEventDispatcher {
         String kind = jsonObject.get("kind").getAsString();
         if(kind.equals(KIND_RECEIVED_TURN))
         {
-            ReceivedMoveData move = gson.fromJson(msg, ReceivedMoveData.class);
+            MoveData move = gson.fromJson(msg, MoveData.class);
             Log.i("NetworkEventDispatcher","Received opponent turn!" + move.game_id);
 
             notifyMoveReceived(move.from, move.to, move.game_id);
@@ -49,6 +50,19 @@ public class NetworkEventDispatcher {
             UserData data = gson.fromJson(msg, UserData.class);
             notifyRegisterResponse(data.password_token);
             Log.i("NetworkEventDispatcher","Received new password token " + data.password_token);
+        }
+        else if(kind.equals(KIND_REGISTRATION_SUCCESS))
+        {
+            RegisterData data = gson.fromJson(msg, RegisterData.class);
+            Log.i("NetworkEventDispatcher","Received passwordtoken! " + data.password_token);
+            if(data.password_token == null) {
+                Log.i("NetworkEventDispatcher", "Username already in Use!! ");
+                UserManager.notifyRegistrationFailure();
+            }
+            else{
+                UserManager.notifyRegistrationSuccess(data.password_token);
+            }
+
         }
 
     }
