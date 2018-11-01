@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
+
+import chesstimeserver.game.Game;
+
 import java.sql.Date;
 
 public class DatabaseConnection {
@@ -22,17 +25,16 @@ public class DatabaseConnection {
 			connection = DriverManager.getConnection(connectionCommand);
 			return true;
 		}catch (Exception ex){
-			System.out.println("false");
 			return false;
 		}
 	}
 	
-	public boolean saveGame(String passwordtoken_w, String passwordtoken_b){
+	public boolean saveGame(Game game){
 		Statement stmt = null;
 		try {
 			stmt = connection.createStatement();
-			String query = "INSERT INTO Game player_white, player_black) ";
-			query = query + "VALUES( " +passwordtoken_w + ", "+passwordtoken_b +")";
+			String query = "INSERT INTO Game idGame ,player_white, player_black) ";
+			query = query + "VALUES( "+game.id+", " +game.playerWhite.passwordToken + ", "+game.playerWhite.passwordToken+")";
 			stmt.executeUpdate(query);
 			return true;
 		} catch (Exception ex) {

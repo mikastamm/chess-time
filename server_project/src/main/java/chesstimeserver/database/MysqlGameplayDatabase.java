@@ -86,12 +86,11 @@ public class MysqlGameplayDatabase implements GameplayDatabase {
 		DatabaseConnection con = new DatabaseConnection();
 		Game newGame = new Game(id fehlt, passwordtoken_w, passwordtoken_b);
 		
-		If(con.connectToMysql("Localhost", "chesstime", "root", "chesstime") == false){
+		if(con.connectToMysql("Localhost", "chesstime", "root", "chesstime") == false){
 			return null;
 		}
 		con.saveGame (passwordtoken_w, passwordtoken_b);
-		DatabaseContainer.applicationDatabase.getUser(passwordtoken_w);
-		DatabaseContainer.applicationDatabase.getUser(passwordtoken_b);
+
 	}
 
 }
