@@ -26,4 +26,17 @@ public class DatabaseConnection {
 			return false;
 		}
 	}
+	
+	public boolean saveGame(String passwordtoken_w, String passwordtoken_b){
+		Statement stmt = null;
+		try {
+			stmt = connection.createStatement();
+			String query = "INSERT INTO Game player_white, player_black) ";
+			query = query + "VALUES( " +passwordtoken_w + ", "+passwordtoken_b +")";
+			stmt.executeUpdate(query);
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
+	}
 }
