@@ -52,7 +52,7 @@ public class FirebaseCommunicator {
 	     NotificationPayload payload = NotificationPayload.builder()
 	             .setTag("TESTss")
 	             .build();
-		 FcmMessageResponse response = client.send(new NotificationUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, payload));
+		 FcmMessageResponse response = client.send(new NotificationUnicastMessage(options,targetFirebaseId, payload));
 		 //FcmMessageResponse response = client.send(new DataUnicastMessage(options, UpdateFirebaseTokenServlet.userFirebaseToken, message));
 
 		 System.out.println("Sent FCM Succ:"+		 response.getNumberOfSuccess() + " Fail:"+response.getNumberOfFailure());

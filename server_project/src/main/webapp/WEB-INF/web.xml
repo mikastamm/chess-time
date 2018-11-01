@@ -20,4 +20,14 @@
     <servlet-name>UpdateFirebaseTokenServlet</servlet-name>
     <url-pattern>/updateFirebaseToken</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MoveServlet</display-name>
+    <servlet-name>MoveServlet</servlet-name>
+    <servlet-class>chesstimeserver.networking.servlets.MoveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MoveServlet</servlet-name>
+    <url-pattern>/move</url-pattern>
+  </servlet-mapping>
 </web-app>
