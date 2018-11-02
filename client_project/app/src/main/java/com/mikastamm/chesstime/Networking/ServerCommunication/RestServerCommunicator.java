@@ -91,7 +91,7 @@ class RestServerCommunicator implements IServerCommunicator{
     public void doSendMove(final String passwordToken, final String gameId, final String fromField, final String toField) {
         URL requestUrl;
         try{
-            requestUrl = new URL(NetworkConstants.ServerBaseUrl + NetworkConstants.SetFirebaseTokenRestPath);
+            requestUrl = new URL(NetworkConstants.ServerBaseUrl + NetworkConstants.MoveRestPath);
 
             HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
 

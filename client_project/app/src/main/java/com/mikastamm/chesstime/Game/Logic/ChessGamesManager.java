@@ -50,16 +50,12 @@ public class ChessGamesManager implements GamesManager {
 
             @Override
             public void onGameFound(GameFoundData data) {
-                games.put(data.game_id, GameFactory.newGame(data));
-                saveGames();
+                addGame(GameFactory.newGame(data), context);
 
                 Intent openGameActivityIntent = new Intent(context, GameActivity.class);
                 openGameActivityIntent.putExtra("GameId", data.game_id);
                 context.startActivity(openGameActivityIntent);
             }
-            public void onRegisterResponse(String password_token){
-
-            };
         });
     }
 
@@ -75,14 +71,6 @@ public class ChessGamesManager implements GamesManager {
     public Game[] getAllGames() {
         Game[] gameArr = new Game[games.values().size()];
         return games.values().toArray(gameArr);
-    }
-    //TODO: remove later
-    public Game[] getAllTestGames() {
-        Game[] testGames = new Game[5];
-        for (int i = 0; i < 5 ; i++){
-            testGames[i] = Game.getTestGame();
-        }
-        return testGames;
     }
 
     @Override

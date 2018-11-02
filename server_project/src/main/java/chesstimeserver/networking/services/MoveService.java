@@ -20,12 +20,12 @@ public class MoveService {
 		MoveData data = new MoveData();
 		data.from = from;
 		data.to = to;
-		data.gameId = game.id;
+		data.game_id = game.id;
 		
 		String json;
 		Gson gson = new Gson();
 		json = gson.toJson(data, MoveData.class);
-		
+		System.out.println("sending"+json);
 		FirebaseCommunicator.sendStringFCM(json, opponent.firebaseToken);
 	}
 }

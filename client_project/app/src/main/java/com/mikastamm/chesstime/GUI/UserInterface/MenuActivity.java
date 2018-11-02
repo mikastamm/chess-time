@@ -1,11 +1,11 @@
 package com.mikastamm.chesstime.GUI.UserInterface;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,6 +16,7 @@ import com.mikastamm.chesstime.GUI.PresentationLogic.DefaultMenuPresenter;
 import com.mikastamm.chesstime.GUI.PresentationLogic.IMenuPresenter;
 import com.mikastamm.chesstime.GUI.PresentationLogic.GamesAdapter;
 import com.mikastamm.chesstime.Game.Game;
+import com.mikastamm.chesstime.Game.PersistenceManager;
 import com.mikastamm.chesstime.R;
 
 public class MenuActivity extends AppCompatActivity implements MenuView {
@@ -23,11 +24,12 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     private IMenuPresenter presenter = new DefaultMenuPresenter();
     private GamesAdapter adapter;
     private boolean isRegistered;
+    private ProgressDialog searchingGameSpinnerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i("ChessTime-PWtoken", PersistenceManager.getPlayerToken(this));
         setContentView(R.layout.activity_menu);
         registerPlayer();
         presenter.setView(this);
@@ -38,13 +40,15 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                searchingGameSpinnerDialog = ProgressDialog.show(MenuActivity.this, "",
+                        "Seaching game...", true);
                 presenter.findGame();
             }
         });
 
 
         final ListView lvGames = findViewById(R.id.lv_current_games);
-        adapter = new GamesAdapter(this, ChessTimeApplication.gamesManager.getAllTestGames());
+        adapter = new GamesAdapter(this, ChessTimeApplication.gamesManager.getAllGames());
         lvGames.setAdapter(adapter);
         lvGames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,6 +68,13 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(searchingGameSpinnerDialog != null)
+            searchingGameSpinnerDialog.hide();
     }
 
     @Override

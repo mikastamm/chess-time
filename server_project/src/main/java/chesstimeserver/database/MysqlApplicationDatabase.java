@@ -25,7 +25,7 @@ public class MysqlApplicationDatabase implements ApplicationDatabase {
 		Statement stmt = null;
 		try {
 			stmt = con.connection.createStatement();
-			String updateString = "Update User SET firebase_token = "+newFirebaseToken+" WHERE password_token = "+userPasswordToken;
+			String updateString = "Update User SET firebase_token = \""+newFirebaseToken+"\" WHERE password_token = \""+userPasswordToken+"\"";
 			stmt.executeUpdate(updateString);
 			return;
 		} catch (Exception ex) {
@@ -47,7 +47,7 @@ public class MysqlApplicationDatabase implements ApplicationDatabase {
 		//SQL-Abfrage passwordtoken_w
 		try {
 			stmt = con.connection.createStatement();
-			result = stmt.executeQuery("SELECT * FROM User WHERE password_token = "+passwordtoken);
+			result = stmt.executeQuery("SELECT * FROM User WHERE password_token = \""+passwordtoken+"\"");
 			result.first(); // moves the cursor to the first entry of the result set
 			List<UserInfo> userInfo = new ArrayList<UserInfo>();
 			while(! result.isAfterLast()) {

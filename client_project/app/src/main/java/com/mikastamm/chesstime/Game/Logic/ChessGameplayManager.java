@@ -4,6 +4,7 @@ import android.graphics.Point;
 import android.util.ArrayMap;
 
 import com.mikastamm.chesstime.ChessTimeApplication;
+import com.mikastamm.chesstime.Game.Board.BoardUtil;
 import com.mikastamm.chesstime.Game.Board.HighlightedField;
 import com.mikastamm.chesstime.Game.Board.HighlightedFieldType;
 import com.mikastamm.chesstime.Game.Board.MoveValidator;
@@ -12,6 +13,8 @@ import com.mikastamm.chesstime.Game.Figures.King;
 import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.UserInfo;
 import com.mikastamm.chesstime.Game.UserManager;
+import com.mikastamm.chesstime.Networking.ServerCommunication.ServerCommunicator;
+
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +60,9 @@ public class ChessGameplayManager implements GameplayManager {
 
     @Override
     public Point getSelectedField() {
+        if(selectedField == null)
+            return null;
+
         return new Point(selectedField);
     }
 
@@ -66,28 +72,21 @@ public class ChessGameplayManager implements GameplayManager {
         Figure toFigure = game.boardState.getFigure(to);
         game.boardState.board[to.y][to.x] = game.boardState.getFigure(from);
         game.boardState.board[from.y][from.x] = null;
-        game.isWhitesTurn = !game.isWhitesTurn;
 
-        //TODO: Remove when multiplayer works. This just ends the non player users turn after some time
-        if(!game.isWhitesTurn)
+        //If the player made the move send it to the server
+        if(ChessTimeApplication.userManager.isPlayerWhite(game) == game.isWhitesTurn)
         {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try{
-                        Thread.sleep(1500);
-                    }
-                    catch (Exception ignored){}
-                    game.isWhitesTurn = true;
-                }
-            }).start();
+            ServerCommunicator.getInstance().sendMove(ChessTimeApplication.userManager.getPlayerToken(), game.id, BoardUtil.getFieldNameFromPoint(from), BoardUtil.getFieldNameFromPoint(to));
         }
+
+        game.isWhitesTurn = !game.isWhitesTurn;
 
         //Check for win & notify the Change listener
         if(toFigure != null  && toFigure.getClass() == King.class)
             game.notifyGameOver(issuingUser.equals(ChessTimeApplication.userManager.getPlayer()));
 
         game.notifyTurnChanged(game.isWhitesTurn);
+
 
         game.boardState.notifyBoardStateChanged();
         ChessTimeApplication.gamesManager.saveGames();

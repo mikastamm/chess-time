@@ -9,4 +9,5 @@ public interface GameplayDatabase {
 	Game getGame(String gameId);
 	boolean saveGame(String gameid, String whiteToken, String blackToken);
 	void addToSearchingUsers(String pwtoken);
+	void removeFromSearchingUsers(String pwtoken);
 }

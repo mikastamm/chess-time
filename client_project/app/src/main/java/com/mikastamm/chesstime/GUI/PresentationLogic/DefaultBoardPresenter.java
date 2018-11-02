@@ -44,8 +44,12 @@ public class DefaultBoardPresenter implements BoardPresenter {
         game.boardState.addBoardStateChangeListener(new BoardStateChangeListener() {
             @Override
             public void onBoardStateChanged() {
-                view.setHighlightedFields(gameplayManager.getHighlightedFields(gameplayManager.getSelectedField(), ChessTimeApplication.userManager.isPlayerWhite(game)));
-                view.notifyBoardStateChanged();
+                Point selectedField = gameplayManager.getSelectedField();
+
+                if(selectedField != null) {
+                    view.setHighlightedFields(gameplayManager.getHighlightedFields(selectedField, ChessTimeApplication.userManager.isPlayerWhite(game)));
+                    view.notifyBoardStateChanged();
+                }
             }
         });
         gameplayManager = GameplayManagerFactory.makeGameplayManager(game);

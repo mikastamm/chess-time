@@ -15,7 +15,7 @@ public class SearchPlayerService {
 		{
 			UserInfo player = DatabaseContainer.getApplicationDatabase().getUser(passwordToken);
 			SearchPlayerResponse resp = new SearchPlayerResponse();
-			resp.gameId = game.id;
+			resp.game_id = game.id;
 			resp.is_opponent_white = game.playerBlack.passwordToken.equals(passwordToken);
 			resp.kind = "new_game";
 			resp.opponent_elo =(resp.is_opponent_white ? game.playerWhite.elo : game.playerBlack.elo)+"";
@@ -28,13 +28,15 @@ public class SearchPlayerService {
 			resp.opponent_name = player.name;
 			resp.is_opponent_white = !resp.is_opponent_white;
 			
+			UserInfo searchee = (!resp.is_opponent_white ? game.playerWhite : game.playerBlack);
 			String searcheeJson = gson.toJson(resp, SearchPlayerResponse.class);
 			
 			FirebaseCommunicator.sendStringFCM(searcherJson, player.firebaseToken);
-			
-			//TODO: Replace with searchee pwtoken (need to implement searchPlayerByName method in database
-			//FirebaseCommunicator.sendStringFCM(searcheeJson, targetFirebaseId); 
-			
+			DatabaseContainer.getGameplayDatabase().removeFromSearchingUsers(player.passwordToken);
+
+			FirebaseCommunicator.sendStringFCM(searcheeJson, searchee.firebaseToken); 			
+			DatabaseContainer.getGameplayDatabase().removeFromSearchingUsers(searchee.passwordToken);
+
 		}
 		else {
 			DatabaseContainer.getGameplayDatabase().addToSearchingUsers(passwordToken);

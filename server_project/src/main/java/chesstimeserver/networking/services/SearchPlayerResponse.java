@@ -5,5 +5,5 @@ public class SearchPlayerResponse {
 	public String opponent_name;
 	public String opponent_elo;
 	public boolean is_opponent_white;
-	public String gameId;
+	public String game_id;
 }

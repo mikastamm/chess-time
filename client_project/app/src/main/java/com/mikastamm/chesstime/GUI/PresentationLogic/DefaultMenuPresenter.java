@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.mikastamm.chesstime.ChessTimeApplication;
 import com.mikastamm.chesstime.GUI.UserInterface.MenuView;
 import com.mikastamm.chesstime.Game.Game;
 import com.mikastamm.chesstime.Game.Logic.ChessGamesManager;
@@ -57,7 +58,7 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
     @Override
     public void onCreate() {
-        this.gamesManager = new ChessGamesManager(this.viewContext);
+        this.gamesManager = ChessTimeApplication.gamesManager;
     }
 
     @Override
@@ -73,7 +74,7 @@ public class DefaultMenuPresenter implements IMenuPresenter {
 
     @Override
     public Game[] getGames(){
-        return gamesManager.getAllTestGames(); //TODO: remove later
+        return gamesManager.getAllGames();
     }
 
 
@@ -90,8 +91,8 @@ public class DefaultMenuPresenter implements IMenuPresenter {
         });
 
         String firebaseToken = PersistenceManager.getFirebaseId(viewContext);
-        ServerCommunicator.getInstance().updateFirebaseToken("", FirebaseInstanceId.getInstance().getToken());
-        ServerCommunicator.getInstance().findGame("");
+        ServerCommunicator.getInstance().updateFirebaseToken(PersistenceManager.getPlayerToken(viewContext), FirebaseInstanceId.getInstance().getToken());
+        ServerCommunicator.getInstance().findGame(PersistenceManager.getPlayerToken(viewContext));
         Log.i("ChessTime", "FirebaseToken:"+firebaseToken);
     }
 }
