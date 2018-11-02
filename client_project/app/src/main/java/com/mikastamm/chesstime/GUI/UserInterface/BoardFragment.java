@@ -1,5 +1,6 @@
 package com.mikastamm.chesstime.GUI.UserInterface;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,14 +41,34 @@ public class BoardFragment extends Fragment implements BoardView {
 
     @Override
     public void notifyBoardStateChanged() {
-        boardAdapter.notifyDataSetChanged();
+        FragmentActivity activity = getActivity();
+
+        if(activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    boardAdapter.notifyDataSetChanged();
+
+                }
+            });
+        }
     }
 
 
     @Override
     public void setHighlightedFields(Map<Point, HighlightedFieldType> highlightedFields){
         boardAdapter.setHighlightedFields(highlightedFields);
-        boardAdapter.notifyDataSetChanged();
+
+        FragmentActivity activity = getActivity();
+        if(activity != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    boardAdapter.notifyDataSetChanged();
+
+                }
+            });
+        }
     }
 
     @Override

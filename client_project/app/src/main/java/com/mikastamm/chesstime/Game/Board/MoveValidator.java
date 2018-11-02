@@ -103,6 +103,9 @@ public class MoveValidator {
                     if (figureAtPoint != null) {
                         hasToJump = true;
                     }
+
+                    if(figureAtPoint == null && p.onlyOnCapture)
+                        result = null;
                 }
 
                 if(result!=null)

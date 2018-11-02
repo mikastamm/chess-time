@@ -32,8 +32,6 @@ public class GameActivity extends AppCompatActivity {
 
         gameId = passedParameters.getString(BoardView.GAME_ID_BUNDLE_KEY);
 
-        if(gameId == null)
-            Log.i("","");
 
         initBoardFragment(gameId);
 

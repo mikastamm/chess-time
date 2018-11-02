@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#22232a</color>
     <color name="colorPrimaryLight">#76777e</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorFieldBlack">#222222</color>
+    <color name="colorFieldBlack">#454545</color>
     <color name="colorFieldWhite">#ffffff</color>
     <color name="colorFieldMove">#FF84D41B</color>
     <color name="colorFieldCapture">#FFF18B1E</color>

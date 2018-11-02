@@ -65,8 +65,8 @@ public class BoardState {
         }
         Figure[] blackBackrow = { new Rook(false), new Knight(false), new Bishop(false), new King(false), new Queen(false), new Bishop(false), new Knight(false), new Rook(false)};
 
-        board[6] = whiteBackrow;
-        board[7] = whitePawnRow;
+        board[7] = whiteBackrow;
+        board[6] = whitePawnRow;
         for (int i = 2; i < 6; i++) {
             board[i] = new Figure[8];
         }

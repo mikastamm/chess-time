@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NetworkEventDispatcher {
-    static final String KIND_RECEIVED_TURN = "oppenent_turn";
+    static final String KIND_RECEIVED_TURN = "opponent_turn";
     static final String KIND_GAME_FOUND = "new_game";
     static final String KIND_REGISTRATION_SUCCESS = "registration_result";
 

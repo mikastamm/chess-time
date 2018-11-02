@@ -76,7 +76,9 @@ public class ChessGameplayManager implements GameplayManager {
         //If the player made the move send it to the server
         if(ChessTimeApplication.userManager.isPlayerWhite(game) == game.isWhitesTurn)
         {
-            ServerCommunicator.getInstance().sendMove(ChessTimeApplication.userManager.getPlayerToken(), game.id, BoardUtil.getFieldNameFromPoint(from), BoardUtil.getFieldNameFromPoint(to));
+            String fromField = BoardUtil.getFieldNameFromPoint(from);
+            String toField = BoardUtil.getFieldNameFromPoint(to);
+            ServerCommunicator.getInstance().sendMove(ChessTimeApplication.userManager.getPlayerToken(), game.id, fromField, toField);
         }
 
         game.isWhitesTurn = !game.isWhitesTurn;

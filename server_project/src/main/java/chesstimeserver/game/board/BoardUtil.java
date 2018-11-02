@@ -5,14 +5,17 @@ import java.awt.Point;
 public class BoardUtil {
     public static Point getPointFromFieldName(String fieldName)
     {
-        char[] c = fieldName.toCharArray();
-        Point p = new Point(Integer.parseInt(c[1]+""), charToAlphabetPosition(c[0]));
+        String x, y;
+        x = fieldName.substring(0, fieldName.indexOf(","));
+        y = fieldName.substring(fieldName.indexOf(",")+1);
+        Point p = new Point(Integer.parseInt(x), Integer.parseInt(y));
         return p;
     }
 
     public static String getFieldNameFromPoint(Point point){
-        return numberToCharAtAlphabetPosition(point.y) + point.x + "";
-    }
+        String result = point.x + "," +point.y;
+        return result;   
+       }
 
     public static int charToAlphabetPosition(char c){
         c = Character.toLowerCase(c);

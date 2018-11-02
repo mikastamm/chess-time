@@ -1,5 +1,6 @@
 package com.mikastamm.chesstime.GUI.PresentationLogic;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
 
@@ -48,8 +49,11 @@ public class DefaultBoardPresenter implements BoardPresenter {
 
                 if(selectedField != null) {
                     view.setHighlightedFields(gameplayManager.getHighlightedFields(selectedField, ChessTimeApplication.userManager.isPlayerWhite(game)));
-                    view.notifyBoardStateChanged();
                 }
+
+
+                view.notifyBoardStateChanged();
+
             }
         });
         gameplayManager = GameplayManagerFactory.makeGameplayManager(game);
