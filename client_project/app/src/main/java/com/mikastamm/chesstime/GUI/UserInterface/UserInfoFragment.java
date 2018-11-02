@@ -39,10 +39,8 @@ public class UserInfoFragment extends Fragment implements UserInfoView {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_info, container, false);
         TextView txtName = view.findViewById(R.id.txt_player_name);
-        TextView txtElo = view.findViewById(R.id.txt_player_elo);
 
         txtName.setText(isWhite ? game.playerWhite.name : game.playerBlack.name);
-        txtElo.setText(isWhite ? game.playerWhite.elo : game.playerBlack.elo);
 
         return view;
     }

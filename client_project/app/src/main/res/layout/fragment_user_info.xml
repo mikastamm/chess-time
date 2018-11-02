@@ -4,50 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
     android:background="@android:color/white">
 
     <TextView
         android:id="@+id/txt_player_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="4dp"
         android:text="TextView"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_player_elo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_player_name" />
-
-    <TextView
-        android:id="@+id/txt_player_clock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="TimePlaceholder" />
-
-    <TextView
-        android:id="@+id/txt_remis_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_player_clock"
-        tools:text="RemisPlaceholder" />
 </android.support.constraint.ConstraintLayout>

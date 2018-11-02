@@ -53,17 +53,10 @@ public class GamesAdapter extends BaseAdapter {
         UserInfo oppenent = ChessTimeApplication.userManager.getPlayer().equals(games[position].playerBlack) ? games[position].playerWhite : games[position].playerBlack;
 
         TextView leftTextView = (TextView) convertView.findViewById(R.id.txt_name_opponent);
-        TextView rightTextView = (TextView) convertView.findViewById(R.id.txt_elo_opponent);
-        TextView centreTextView = (TextView) convertView.findViewById(R.id.txt_game_time);
+
 
         if (leftTextView != null) {
             leftTextView.setText(oppenent.name);
-        }
-        if (rightTextView != null) {
-            rightTextView.setText("Elo: " + oppenent.elo);
-        }
-        if (centreTextView != null) {
-            centreTextView.setText("1 Stunde, 2 Minuten");
         }
 
         return convertView;
