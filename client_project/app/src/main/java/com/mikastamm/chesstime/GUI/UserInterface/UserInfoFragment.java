@@ -3,6 +3,7 @@ package com.mikastamm.chesstime.GUI.UserInterface;
 import android.support.v4.app.Fragment;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,9 @@ public class UserInfoFragment extends Fragment implements UserInfoView {
         //Pass the gameId on to the Presenter
         String gameId = getArguments().getString(UserInfoView.GAME_ID_BUNDLE_KEY);
         game = ChessTimeApplication.gamesManager.getGame(gameId);
+
+        Log.e("Player White",game.playerWhite.name);
+        Log.e("Player Black",game.playerBlack.name);
         //Is this the UserInfoFragment for the white or black player (top or botton)
         isWhite = getArguments().getBoolean(UserInfoView.IS_WHITE_BUNDLE_KEY);
     }

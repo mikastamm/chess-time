@@ -110,8 +110,7 @@ public class MoveValidator {
 
                 if(result!=null)
                     fields.put(result.field, result.type);
-                else
-                    fields.put(point, HighlightedFieldType.CANT_MOVE);
+
             }
         }
         return fields;
