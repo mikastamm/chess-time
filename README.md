@@ -1,6 +1,6 @@
-#Chess Time
+# Chess Time
 
-###Chess for the busy
+### Chess for the busy
 
 You love chess but are too busy for a game?
 Then look no further.
